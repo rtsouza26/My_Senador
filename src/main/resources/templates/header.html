@@ -1,0 +1,71 @@
+<header>
+		<section class="container_12">
+			<!-- / Using 960's grid container_12 to standartize paddings/margins -->
+			<div class="upper clearfix">
+				<!-- / Logo -->
+				<a th:href="@{/}" class="logo mt20"><img
+					src="img/hdr_logo.png" alt="" /></a>
+				<!-- / End logo -->
+
+				<!-- / Language and search -->
+				<div class="r top">
+					<!-- / Language  -->
+					<ul class="lang sf_menu clearfix">
+						<!-- / Please note that these LI elements are right floated to keep the fluid layout consistent  -->
+						<li class="last"><a href="#"><img
+								src="img/icons/question.png" alt="" /></a></li>
+						<li><a href="#">English</a>
+							<ul>
+								<li><a href="#">Portugues</a></li>
+								<li class="last"><a href="#">Nihongo</a></li>
+							</ul></li>
+					</ul>
+					<!-- / End language  -->
+					<!-- / Search  -->
+					<div class="search">
+						<form action="search.php">
+							<input type="text" placeholder="Search database...">
+							<button></button>
+						</form>
+					</div>
+					<!-- / End search input -->
+				</div>
+				<div class="clear">&nbsp;</div>
+				<!-- / End slanguage and search -->
+
+				<!-- / Userbar - separated from the main nav to fall back in mobile design. -->
+				<div class="r usermenu">
+					<ul class="sf_menu clearfix">
+						<li class="last"><a href="#" class="messages"><img
+								src="img/icons/helloadmin/messages.png" alt="" /><sup>5</sup></a></li>
+						<li><a href="#"><img src="img/icons/helloadmin/user.png"
+								alt="" /><span>Username</span></a>
+							<ul>
+								<li><a href="#">Prefenrencias</a></li>
+								<li><a href="#">Sua Conta</a></li>
+								<li class="last"><a href="#">Opções</a></li>
+							</ul></li>
+					</ul>
+				</div>
+				<!-- / End userbar -->
+
+				<!-- / Main navigation-->
+				<nav class="mainnav l">
+					<ul id="mainnav" class="sf_menu clearfix">
+						<li><a th:href="@{/}" title="Link title here"><img
+								src="img/icons/helloadmin/dashboard.png" alt="" /><span>Senadores</span></a></li>
+						<li><a href="#" title="Link title here"><img
+								src="img/icons/helloadmin/layouts.png" alt="" /><span>Informa&ccedil&otildees</span></a>
+							</li>
+						<li><a href="#" title="Link title here"><img
+								src="img/icons/helloadmin/modules.png" alt="" /><span>Modulos</span></a>
+							</li>
+						<li><a href="#" title="Link title here"><img
+								src="img/icons/helloadmin/features.png" alt="" /><span>Ferramentas</span></a>
+						</li>
+					</ul>
+				</nav>
+				<!-- / End main navigation-->
+			</div>
+		</section>
+	</header>

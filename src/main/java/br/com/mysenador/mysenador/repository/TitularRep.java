@@ -1,0 +1,10 @@
+package br.com.mysenador.mysenador.repository;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Component;
+
+import br.com.mysenador.mysenador.model.Titular;
+@Component
+public interface TitularRep extends CrudRepository<Titular, Integer> {
+
+}

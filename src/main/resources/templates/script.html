@@ -1,0 +1,69 @@
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/plugins/jquery.ui.spinner.js"></script>
+	<!-- Loading the spinner before jqueryui, because it's officially part of jQuery UI 1.9 and not compatible with 1.8 -->
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/plugins/jquery.easing.1.3.js"></script>
+	<script type="text/javascript"
+		src="js/plugins/jquery.mousewheel.min.js"></script>
+	<script type="text/javascript"
+		src="js/plugins/jquery.collapsible.min.js"></script>
+	<script type="text/javascript" src="js/plugins/jquery.cookie.js"></script>
+	<script type="text/javascript" src="js/plugins/jquery.tipsy.js"></script>
+	<script type="text/javascript"
+		src="js/plugins/autoresize.jquery.min.js"></script>
+	<script type="text/javascript" src="js/plugins/jquery.autotab-1.1b.js"></script>
+	<script type="text/javascript" src="js/plugins/jquery.uniform.min.js"></script>
+	<script type="text/javascript" src="js/plugins/ui.multiselect.js"></script>
+	<script type='text/javascript'
+		src="js/plugins/fullcalendar/fullcalendar.min.js"></script>
+	<script type="text/javascript"
+		src="js/plugins/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+	<script type="text/javascript"
+		src="js/plugins/jquery.jBreadCrumb.1.1.js"></script>
+	<script type="text/javascript" src="js/plugins/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="filemanager/js/elfinder.min.js"></script>
+
+	<!-- These are for blueimp -->
+	<script src="blueimp/tmpl.min.js"></script>
+	<script src="blueimp/load-image.min.js"></script>
+	<script src="blueimp/jquery.iframe-transport.js"></script>
+	<script src="blueimp/jquery.fileupload.js"></script>
+	<script src="blueimp/jquery.fileupload-ui.js"></script>
+	<script src="blueimp/application.js"></script>
+	<!-- The XDomainRequest Transport is included for cross-domain file deletion for IE >= 8 -->
+	<script src="blueimp/jquery.xdr-transport.js"></script>
+	<!-- End blueimp -->
+
+	<!-- / Loading WYSIWYG Editor, load it only when needed -->
+	<script src="js/plugins/jquery.wysiwyg.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="js/plugins/controls/default.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="js/plugins/controls/wysiwyg.table.js"
+		type="text/javascript" charset="utf-8"></script>
+	<script src="js/plugins/controls/wysiwyg.image.js"
+		type="text/javascript" charset="utf-8"></script>
+	<script src="js/plugins/controls/wysiwyg.link.js"
+		type="text/javascript" charset="utf-8"></script>
+	<script src="js/plugins/controls/wysiwyg.cssWrap.js"
+		type="text/javascript" charset="utf-8"></script>
+
+	<script type="text/javascript" src="js/plugins/hoverIntent.js"></script>
+	<script type="text/javascript" src="js/plugins/superfish.js"></script>
+
+	<script src="js/plugins.js"></script>
+	<script src="js/script.js"></script>
+	<script src="js/mylibs/helper.js"></script>
+	<script>
+// iOS scale bug fix
+MBP.scaleFix();
+
+// Respond.js
+yepnope({
+	test : Modernizr.mq('(only all)'),
+	nope : ['js/libs/respond.min.js']
+});
+</script>

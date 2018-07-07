@@ -1,0 +1,85 @@
+<!doctype html>
+
+
+<!-- 
+320 and Up boilerplate extension
+Andy Clarke http://about.me/malarkey
+Keith Clark http://twitter.com/keithclarkcouk
+Version: 2
+URL: http://stuffandnonsense.co.uk/projects/320andup/
+License: http://creativecommons.org/licenses/MIT
+-->
+
+<!--[if IEMobile 7]><html class="no-js iem7 oldie"><![endif]-->
+<!--[if lt IE 7]><html class="no-js ie6 oldie" lang="en"><![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js ie7 oldie" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js ie8 oldie" lang="en"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="en">
+<!--<![endif]-->
+
+<div th:replace="head"></div>
+<body class="clearfix">
+<div th:replace="header"></div>
+	
+	<!-- / Start main -->
+	<div id="main" class="container_12 clearfix" role="main">
+
+
+
+
+		<!-- / Box -->
+		<div class="box threethirds">
+			<div class="boxheading clearfix">
+				<h3>Lista de Parlamentares</h3>
+				<a class="move"></a>
+			</div>
+			<section>
+				<table class="display" id="tabled">
+					<thead>
+						<tr>
+							<!--<th class="readonly check"><input type="checkbox" /></th>-->
+							<th>Codigo</th>
+							<th>Parlamentar</th>
+							<th>Sigla</th>
+							<th>UF</th>
+							<th>E-mail</th>
+							<th class="tview">View</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr th:each="parl:${Parl}">
+							<!--<td class="readonly check"><input name="check1"
+								type="checkbox" /></td>-->
+							<td><span th:text="${parl.CodigoParlamentar}"></span></td>
+							<td><span th:text="${parl.NomeParlamentar}"></span></td>
+							<td><span th:text="${parl.SiglaPartidoParlamentar}"></span></td>
+							<td><span th:text="${parl.UfParlamentar}"></span></td>
+							<td><span th:text="${parl.EmailParlamentar}"></span></td>
+							<td class="tcontrols"><a th:href="@{/informa(id=${parl.CodigoParlamentar})}"class="smallbtn"><img
+									src="img/table/view.png" alt="" /></a></td>
+							
+						</tr>
+
+
+					</tbody>
+				</table>
+				<div class="clear">&nbsp;</div>
+
+			</section>
+		</div>
+
+	</div>
+	<!-- / End main -->
+
+	<!-- / Footer -->
+	<div th:replace = "footer"></div>
+	<!-- / End footer -->
+
+	<!-- Scripts -->
+<div th:replace = "script"></div>
+
+</body>
+</html>

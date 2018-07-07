@@ -1,0 +1,61 @@
+<!doctype html>
+
+
+<!-- 
+320 and Up boilerplate extension
+Andy Clarke http://about.me/malarkey
+Keith Clark http://twitter.com/keithclarkcouk
+Version: 2
+URL: http://stuffandnonsense.co.uk/projects/320andup/
+License: http://creativecommons.org/licenses/MIT
+-->
+
+<!--[if IEMobile 7]><html class="no-js iem7 oldie"><![endif]-->
+<!--[if lt IE 7]><html class="no-js ie6 oldie" lang="en"><![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js ie7 oldie" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js ie8 oldie" lang="en"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="en">
+<!--<![endif]-->
+
+
+<div th:replace="head"></div>
+
+<body class="login clearfix">
+
+<!-- / Start main -->
+<div id="login" class="inner clearfix">
+
+	<div class="header">
+		<a href="index.html" class="logo"><img src="img/hdr_logo.png" alt="" /></a>
+	</div>
+	<div class="loginform">
+		<!-- / Language  -->
+		<ul class="lang sf_menu clearfix"><!-- / Please note that these LI elements are right floated to keep the fluid layout consistent  -->
+			<li class="last"><a href="#"><img src="img/icons/question.png" alt="" /></a></li>
+			<li><a href="#">English</a>
+				<ul>
+					<li><a href="#">German</a></li>
+					<li class="last"><a href="#">Bulgarian</a></li>
+				</ul>
+			</li>
+		</ul>
+		<!-- / End language  -->
+		<div class="form_container">
+			<form th:action="@{/login}" method = "post" >
+				<input type="text" value="email@example.com" id="email" name="email" />
+				<input type="password" value="thepassword" id="senha" name="senha" />
+				<input type="submit" class="loginbtn" value="login" />
+				<a href="login">Forgot your password?</a>
+			</form>
+		</div>
+	</div>
+	
+</div>
+<!-- / End main -->
+
+<!-- Scripts -->
+<div th:replace = "script"></div>
+
+</body>
+</html>

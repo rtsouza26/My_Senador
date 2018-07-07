@@ -1,0 +1,101 @@
+<!doctype html>
+
+
+<!-- 
+320 and Up boilerplate extension
+Andy Clarke http://about.me/malarkey
+Keith Clark http://twitter.com/keithclarkcouk
+Version: 2
+URL: http://stuffandnonsense.co.uk/projects/320andup/
+License: http://creativecommons.org/licenses/MIT
+-->
+
+<!--[if IEMobile 7]><html class="no-js iem7 oldie"><![endif]-->
+<!--[if lt IE 7]><html class="no-js ie6 oldie" lang="en"><![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js ie7 oldie" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js ie8 oldie" lang="en"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="pt-br">
+<!--<![endif]-->
+
+<div th:replace="head"></div>
+<body class="clearfix">
+<div th:replace="header"></div>
+
+<!-- / Start main -->
+<div id="main" class="container_12 clearfix" role="main">
+
+	<!-- / Box -->
+	<div class="box onethird menu">
+		<section>
+			<div class="user clearfix">
+				<div class="l">
+				<figure class="thumb large"><a class="userimg"><img th:src="@{${foto}}"/></a></figure>
+				</div>
+				<div class="l">
+					<p><strong th:text="${info.NomeParlamentar}"></strong></p>
+					<p><a th:text="${info.SiglaPartidoParlamentar}"><img src="img/icons/helloadminpack/16x16/17.png" alt="" /></a></p>
+					<p><a th:text="${info.UfParlamentar}"><img src="img/icons/helloadminpack/16x16/21.png" alt="" /></a></p>
+				</div>
+			</div>
+		</section>
+		<ul class="clearfix">
+			
+			<li class="hasul"><a href="#" title="Informações"><img src="img/icons/helloadminpack/16x16/03.png" alt="" />Informa&ccedil&otildees</a><span></span>
+				<ul>
+					<li><a></a></li>
+					<li><a th:text= "${info.NomeCompletoParlamentar}"></a></li>
+					<li><a th:text="${info.EmailParlamentar}"></a></li>
+						
+				</ul>
+			</li>
+			<li class="hasul"><a href="#" title="Link title here"><img src="img/icons/helloadminpack/16x16/02.png" alt="" />Suplentes</a><span></span>
+				<ul>
+					
+					<li><a th:text="${mand.Suplentes[0].DescricaoParticipacao}"></a></li>
+					<li><a th:text="${mand.Suplentes[0].NomeParlamentar}"></a></li>
+					<li><a th:text="${mand.Suplentes[1].DescricaoParticipacao}"></a></li>
+					<li><a th:text="${mand.Suplentes[1].NomeParlamentar}"></a></li>
+					
+				</ul>
+			</li>
+			<li class="hasul last"><a href="#" title="Link title here"><img src="img/icons/helloadminpack/16x16/18.png" alt="" />Mandato</a><span></span>
+				<ul>
+					
+					<li><a>Inicio</a></li>
+					<li><a th:text="${mand.PrimeiraLegislaturaDoMandato.DataInicio}"></a></li>
+					<li><a>Fim</a></li>
+					<li><a th:text="${mand.SegundaLegislaturaDoMandato.DataFim}"></a></li>
+				
+				</ul>
+							
+						
+			</li>
+		</ul>	
+	</div>
+
+	<!-- / Box -->
+	<div class="box twothirds">
+	<div class="boxheading clearfix"><h3 th:text= "${info.NomeCompletoParlamentar}"></h3><a class="move"></a></div>
+	<section class="clearfix">
+		<h2 th:text="${filiacao.Partido.NomePartido}" ></h2>
+		<p th:href="@{info.UrlPaginaParlamentar}" th:text="${info.UrlPaginaParlamentar}"></p>
+		<p th:text="${info.UfParlamentar}"></p>
+		<p></p>
+	</section>
+	</div>
+	
+</div>
+<!-- / End main -->
+
+<!-- / Footer -->
+<div th:replace = "footer"></div>
+<!-- / End footer -->
+
+<!-- Scripts -->
+<div th:replace = "script"></div>
+
+
+
+</body>
+</html>
