@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.mysenador.mysenador.extractor.XmlApi;
@@ -31,7 +32,7 @@ import br.com.mysenador.mysenador.repository.SegundaLegislaturaRep;
 import br.com.mysenador.mysenador.repository.SuplenteRep;
 import br.com.mysenador.mysenador.util.HtmlRequest;
 
-@Controller
+@RestController
 public class ParlamentarController {
 	
 	
@@ -87,6 +88,7 @@ public class ParlamentarController {
 
 	}
 	
+	@CrossOrigin(origins = {"http://localhost:8100","http://localhost:8080"})
 	@RequestMapping("/api/senators/informa")
 	public String informaApi(Model model, @RequestParam int id) {
 

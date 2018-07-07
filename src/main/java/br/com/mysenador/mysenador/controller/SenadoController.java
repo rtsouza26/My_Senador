@@ -1,7 +1,5 @@
 package br.com.mysenador.mysenador.controller;
 
-import java.io.File;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,21 +7,27 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.mysenador.mysenador.model.*;
-import br.com.mysenador.mysenador.util.*;
-import br.com.mysenador.mysenador.extractor.*;
-import br.com.mysenador.mysenador.repository.*;
+import br.com.mysenador.mysenador.extractor.XmlApi;
+import br.com.mysenador.mysenador.model.IdentificacaoParlamentar;
+import br.com.mysenador.mysenador.model.Mandato;
+import br.com.mysenador.mysenador.model.Parlamentar;
+import br.com.mysenador.mysenador.model.Senado;
+import br.com.mysenador.mysenador.model.Titular;
+import br.com.mysenador.mysenador.model.User;
+import br.com.mysenador.mysenador.repository.IdentificacaoParlamentarRep;
+import br.com.mysenador.mysenador.repository.TitularRep;
+import br.com.mysenador.mysenador.repository.UserRep;
+import br.com.mysenador.mysenador.util.HtmlRequest;
 
-@Controller
+@RestController
 
 public class SenadoController {
 
@@ -50,7 +54,7 @@ public class SenadoController {
 	//public String index() {
 	//	return "index";
 	//}
-	
+	@CrossOrigin(origins = {"http://localhost:8100","http://localhost:8080"})
 	@RequestMapping("/")
 	public ModelAndView index1() {
 

@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import br.com.mysenador.mysenador.extractor.XmlApi;
 import br.com.mysenador.mysenador.model.Comissao;
@@ -41,7 +42,7 @@ import br.com.mysenador.mysenador.repository.SuplenteRep;
 import br.com.mysenador.mysenador.repository.TitularRep;
 import br.com.mysenador.mysenador.util.HtmlRequest;
 
-@Controller
+@RestController
 public class FerramentasController {
 
 	@Autowired
