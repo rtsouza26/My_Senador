@@ -10,7 +10,6 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,8 +18,10 @@ import br.com.mysenador.mysenador.model.Comissao;
 import br.com.mysenador.mysenador.model.DadosBasicosParlamentar;
 import br.com.mysenador.mysenador.model.Exercicio;
 import br.com.mysenador.mysenador.model.FiliacaoAtual;
+import br.com.mysenador.mysenador.model.IdentificacaoMateria;
 import br.com.mysenador.mysenador.model.IdentificacaoParlamentar;
 import br.com.mysenador.mysenador.model.Mandato;
+import br.com.mysenador.mysenador.model.Materia;
 import br.com.mysenador.mysenador.model.Parlamentar;
 import br.com.mysenador.mysenador.model.ParlamentarDetalhado;
 import br.com.mysenador.mysenador.model.Partido;
@@ -33,8 +34,10 @@ import br.com.mysenador.mysenador.repository.ComissaoRep;
 import br.com.mysenador.mysenador.repository.DadosBasicosParlamentarRep;
 import br.com.mysenador.mysenador.repository.ExercicioRep;
 import br.com.mysenador.mysenador.repository.FiliacaoAtualRep;
+import br.com.mysenador.mysenador.repository.IdentificacaoMateriaRep;
 import br.com.mysenador.mysenador.repository.IdentificacaoParlamentarRep;
 import br.com.mysenador.mysenador.repository.MandatoRep;
+import br.com.mysenador.mysenador.repository.MateriaRep;
 import br.com.mysenador.mysenador.repository.PartidoRep;
 import br.com.mysenador.mysenador.repository.PrimeiraLegislaturaRep;
 import br.com.mysenador.mysenador.repository.SegundaLegislaturaRep;
@@ -67,6 +70,11 @@ public class FerramentasController {
 	protected TitularRep titurep;
 	@Autowired
 	protected ComissaoRep comirep;
+	@Autowired
+	protected MateriaRep materiarep;
+	@Autowired
+	protected IdentificacaoMateriaRep idmateriarep;
+	
 	
 	protected FiliacaoAtual filiacao =new  FiliacaoAtual();
 	protected XmlApi xmlapi = new XmlApi();
@@ -81,6 +89,8 @@ public class FerramentasController {
 	protected SegundaLegislaturaDoMandato segunda = new SegundaLegislaturaDoMandato();
 	protected List<Suplente> suplentes = new ArrayList<Suplente>();
 	protected List<Exercicio> exercicios = new ArrayList<Exercicio>();
+	protected List<Materia> materias = new ArrayList<Materia>();
+	protected List<IdentificacaoMateria> idmateria = new ArrayList<IdentificacaoMateria>();
 	protected Titular titular =new Titular();
 	protected List<Comissao> comissao = new ArrayList<Comissao>();
 	
@@ -116,9 +126,12 @@ public class FerramentasController {
 			String url ="http://legis.senado.leg.br/dadosabertos/senador/"+identificacao.get(i).getCodigoParlamentar();
 			String xml = requesturl.toString(url);
 			parldet = xmlapi.parlamentarconverte(xml);
+			
 			dadosb = parldet.getParlamentar().getDadosBasicosParlamentar();
+			
 			filiacao = parldet.getParlamentar().getFiliacaoAtual();
 			partido = filiacao.getPartido();
+			
 			dadosb.setId(parldet.getParlamentar().getIdentificacaoParlamentar().getCodigoParlamentar());
 			filiacao.setId(parldet.getParlamentar().getIdentificacaoParlamentar().getCodigoParlamentar());
 			mandato = parldet.getParlamentar().getMandatoAtual();
@@ -129,6 +142,16 @@ public class FerramentasController {
 			titular = parldet.getParlamentar().getMandatoAtual().getTitular();
 			comissao = parldet.getParlamentar().getMembroAtualComissoes();
 			mandato.setId(parldet.getParlamentar().getIdentificacaoParlamentar().getCodigoParlamentar());
+			for(int j=0;j<parldet.getParlamentar().getMateriasDeAutoriaTramitando().size();j++) {
+				if(parldet.getParlamentar().getMateriasDeAutoriaTramitando().get(j).getIdentificacaoMateria().getSiglaSubtipoMateria().equals("PLS")) {
+					
+					materias.add(parldet.getParlamentar().getMateriasDeAutoriaTramitando().get(j));
+					
+				}
+			}
+			for(int n =0;n<materias.size();n++) {
+				idmateria.add(materias.get(n).getIdentificacaoMateria());
+			}
 			
 			
 			dadosbasicosRep.save(dadosb);
@@ -139,11 +162,13 @@ public class FerramentasController {
 			suplerep.saveAll(suplentes);
 			comirep.saveAll(comissao);
 			exercrep.saveAll(exercicios);
+			
 			if(titular!=null) {
 				titurep.save(titular);
 			}
 			mandatorep.save(mandato);
-			
+			idmateriarep.saveAll(idmateria);
+			materiarep.saveAll(materias);
 			
 		}
 
