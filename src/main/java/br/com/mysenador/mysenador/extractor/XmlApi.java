@@ -18,6 +18,7 @@ import br.com.mysenador.mysenador.model.IdentificacaoParlamentar;
 import br.com.mysenador.mysenador.model.Lideranca;
 import br.com.mysenador.mysenador.model.Mandato;
 import br.com.mysenador.mysenador.model.Materia;
+import br.com.mysenador.mysenador.model.MateriasAutoria;
 import br.com.mysenador.mysenador.model.Parlamentar;
 import br.com.mysenador.mysenador.model.ParlamentarDetalhado;
 import br.com.mysenador.mysenador.model.Partido;
@@ -70,6 +71,7 @@ public class XmlApi {
 		arquivo.alias("Partido",Partido.class);
 		arquivo.alias("CargoAtual",CargoAtual.class);
 		arquivo.alias("Materia",Materia.class);
+	
 		arquivo.alias("Suplente",Suplente.class);
 		arquivo.alias("Relatoria",Relatoria.class);
 		arquivo.alias("Exercicio",Exercicio.class);

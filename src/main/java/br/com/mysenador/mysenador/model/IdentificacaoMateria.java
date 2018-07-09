@@ -2,6 +2,8 @@ package br.com.mysenador.mysenador.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -9,7 +11,10 @@ import javax.persistence.Table;
 @Table(name= "identificacaomateria")
 public class IdentificacaoMateria {
 	@Id
-	protected String CodigoMateria;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	protected Integer id;
+	@Column
+	protected Integer CodigoMateria;
 	@Column
 	protected String SiglaCasaIdentificacaoMateria;
 	@Column
@@ -24,10 +29,18 @@ public class IdentificacaoMateria {
 	protected String AnoMateria;
 	
 	
-	public String getCodigoMateria() {
+	
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public Integer getCodigoMateria() {
 		return CodigoMateria;
 	}
-	public void setCodigoMateria(String codigoMateria) {
+	public void setCodigoMateria(Integer codigoMateria) {
 		CodigoMateria = codigoMateria;
 	}
 	public String getSiglaCasaIdentificacaoMateria() {

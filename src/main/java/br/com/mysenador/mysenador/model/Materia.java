@@ -1,8 +1,6 @@
 package br.com.mysenador.mysenador.model;
 
 
-import org.hibernate.annotations.CascadeType;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,22 +10,29 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name= "materia")
 public class Materia {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 	@OneToOne
 	@Cascade({CascadeType.SAVE_UPDATE})
 	protected IdentificacaoMateria IdentificacaoMateria;
-	@Column
+	@Column(columnDefinition="TEXT")
 	protected String EmentaMateria;
 	@Column
 	protected String Categoria;
 	
 	
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public IdentificacaoMateria getIdentificacaoMateria() {
 		return IdentificacaoMateria;
 	}

@@ -22,6 +22,7 @@ import br.com.mysenador.mysenador.model.IdentificacaoMateria;
 import br.com.mysenador.mysenador.model.IdentificacaoParlamentar;
 import br.com.mysenador.mysenador.model.Mandato;
 import br.com.mysenador.mysenador.model.Materia;
+import br.com.mysenador.mysenador.model.MateriasAutoria;
 import br.com.mysenador.mysenador.model.Parlamentar;
 import br.com.mysenador.mysenador.model.ParlamentarDetalhado;
 import br.com.mysenador.mysenador.model.Partido;
@@ -38,6 +39,7 @@ import br.com.mysenador.mysenador.repository.IdentificacaoMateriaRep;
 import br.com.mysenador.mysenador.repository.IdentificacaoParlamentarRep;
 import br.com.mysenador.mysenador.repository.MandatoRep;
 import br.com.mysenador.mysenador.repository.MateriaRep;
+import br.com.mysenador.mysenador.repository.MateriasAutoriaRep;
 import br.com.mysenador.mysenador.repository.PartidoRep;
 import br.com.mysenador.mysenador.repository.PrimeiraLegislaturaRep;
 import br.com.mysenador.mysenador.repository.SegundaLegislaturaRep;
@@ -71,7 +73,9 @@ public class FerramentasController {
 	@Autowired
 	protected ComissaoRep comirep;
 	@Autowired
-	protected MateriaRep materiarep;
+	protected MateriaRep materiaRep;
+	@Autowired
+	protected MateriasAutoriaRep materiasrep;
 	@Autowired
 	protected IdentificacaoMateriaRep idmateriarep;
 	
@@ -93,6 +97,7 @@ public class FerramentasController {
 	protected List<IdentificacaoMateria> idmateria = new ArrayList<IdentificacaoMateria>();
 	protected Titular titular =new Titular();
 	protected List<Comissao> comissao = new ArrayList<Comissao>();
+	protected MateriasAutoria autoria =new MateriasAutoria() ;
 	
 	
 	//função que salva todos os objetos IdentificacaoParlamentar no banco de dados
@@ -103,7 +108,7 @@ public class FerramentasController {
 	  String  xml =requesturl.toString(url); 
 	  Senado senado = xmlapi.converte(xml); 
 	  
-	  for(int i = 0;i<82;i++){ 
+	  for(int i = 0;i<81;i++){ 
 		  
 		  identificacao.add(senado.getParlamentares().get(i).getIdentificacaoParlamentar()); 
 		  System.out.printf("Parlamentar numero:%d",i);
@@ -134,23 +139,35 @@ public class FerramentasController {
 			
 			dadosb.setId(parldet.getParlamentar().getIdentificacaoParlamentar().getCodigoParlamentar());
 			filiacao.setId(parldet.getParlamentar().getIdentificacaoParlamentar().getCodigoParlamentar());
+			
 			mandato = parldet.getParlamentar().getMandatoAtual();
+			
 			primeira = parldet.getParlamentar().getMandatoAtual().getPrimeiraLegislaturaDoMandato();
 			segunda = parldet.getParlamentar().getMandatoAtual().getSegundaLegislaturaDoMandato();
 			exercicios =parldet.getParlamentar().getMandatoAtual().getExercicios();
 			suplentes = parldet.getParlamentar().getMandatoAtual().getSuplentes();
 			titular = parldet.getParlamentar().getMandatoAtual().getTitular();
 			comissao = parldet.getParlamentar().getMembroAtualComissoes();
+			
 			mandato.setId(parldet.getParlamentar().getIdentificacaoParlamentar().getCodigoParlamentar());
-			for(int j=0;j<parldet.getParlamentar().getMateriasDeAutoriaTramitando().size();j++) {
+			autoria.setId(parldet.getParlamentar().getIdentificacaoParlamentar().getCodigoParlamentar());
+			
+			for(int j=0;j<parldet.getParlamentar().getMateriasDeAutoriaTramitando().size();j++){
 				if(parldet.getParlamentar().getMateriasDeAutoriaTramitando().get(j).getIdentificacaoMateria().getSiglaSubtipoMateria().equals("PLS")) {
-					
-					materias.add(parldet.getParlamentar().getMateriasDeAutoriaTramitando().get(j));
-					
+					materias.add(parldet.getParlamentar().getMateriasDeAutoriaTramitando().get(j));	
 				}
 			}
-			for(int n =0;n<materias.size();n++) {
-				idmateria.add(materias.get(n).getIdentificacaoMateria());
+			for(int k =0;k<materias.size();k++) {
+				materias.get(k).setId(materias.get(k).getIdentificacaoMateria().getCodigoMateria());
+				autoria.add(materias.get(k));
+				System.out.println(materias.get(k).getId());
+			}
+			
+						
+			for(int n =0; n<materias.size();n++) {
+					idmateria.add(materias.get(n).getIdentificacaoMateria());
+					
+				
 			}
 			
 			
@@ -160,7 +177,7 @@ public class FerramentasController {
 			primarep.save(primeira);
 			segunrep.save(segunda);
 			suplerep.saveAll(suplentes);
-			comirep.saveAll(comissao);
+			//comirep.saveAll(comissao);
 			exercrep.saveAll(exercicios);
 			
 			if(titular!=null) {
@@ -168,7 +185,14 @@ public class FerramentasController {
 			}
 			mandatorep.save(mandato);
 			idmateriarep.saveAll(idmateria);
-			materiarep.saveAll(materias);
+			materiaRep.saveAll(materias);
+			
+			System.out.println(autoria.getId());
+			materiasrep.save(autoria);
+			
+			materias.clear();
+			idmateria.clear();
+			autoria.clear();
 			
 		}
 
