@@ -78,9 +78,19 @@ License: http://creativecommons.org/licenses/MIT
 	<div class="box twothirds">
 	<div class="boxheading clearfix"><h3 th:text= "${info.NomeCompletoParlamentar}"></h3><a class="move"></a></div>
 	<section class="clearfix">
-		<h2 th:text="${filiacao.Partido.NomePartido}" ></h2>
+	   <h3>Partido</h3>
+		<p th:text="${filiacao.Partido.NomePartido}" ></p>
+		<h3>Pagina Pessoal</h3>
 		<p th:href="@{info.UrlPaginaParlamentar}" th:text="${info.UrlPaginaParlamentar}"></p>
+		<h3>UF do Parlamentar</h3>
 		<p th:text="${info.UfParlamentar}"></p>
+		<h3>Numero de PLS's</h3>
+		<p th:text="${numero}"></p>
+		<h3>Principais PLS's</h3>
+			<table class="display" id="tabled">
+				<thead>
+						
+		  			<tr th:each="parl:${Parl}">
 		<p></p>
 	</section>
 	</div>

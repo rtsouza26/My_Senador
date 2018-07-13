@@ -2,16 +2,11 @@ package br.com.mysenador.mysenador.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 @Entity
 @Table(name= "materiasautoria")
@@ -42,6 +37,12 @@ public class MateriasAutoria {
 	
 	public void clear() {
 		materias.clear();
+	}
+	
+	public void preenche(MateriasAutoria materias, Optional<MateriasAutoria>materiasop ) {
+		materias.setId(materiasop.get().getId());
+		materias.setMaterias(materiasop.get().getMaterias());
+		
 	}
 	
 	

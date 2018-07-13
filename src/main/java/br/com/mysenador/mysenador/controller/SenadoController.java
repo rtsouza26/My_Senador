@@ -1,7 +1,9 @@
 package br.com.mysenador.mysenador.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.mysenador.mysenador.extractor.XmlApi;
 import br.com.mysenador.mysenador.model.IdentificacaoParlamentar;
@@ -92,15 +97,28 @@ public class SenadoController {
 	
 
 	@RequestMapping("/api/senators/all")
-	public String indexapi(Model model) {
+	public String indexapi(Model model) throws JsonProcessingException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String,Object> map = new HashMap<>();
+		identificacao = null;
+		String ident="";
+		identificacao = (List<IdentificacaoParlamentar>) idsalva.findAll();
+		for(int i = 0;i<identificacao.size();i++) {
+			
+			ident = ident + xmlapi.identToJson(identificacao.get(i));
+		}
+		
+		//String xml = requesturl.toString(url);
+		//senado = xmlapi.converte(xml);
+		//String desconverte = xmlapi.senadoToJson(senado);
+		
+		map.put("senators", identificacao);
+		model.addAttribute("descon", ident);
+		model.addAttribute("descon1",map);
+		
 
-		String xml = requesturl.toString(url);
-		senado = xmlapi.converte(xml);
-		String desconverte = xmlapi.senadoToJson(senado);
-
-		model.addAttribute("descon", desconverte);
-
-		return "index1";
+		return mapper.writeValueAsString(map);
 
 	}
 	
