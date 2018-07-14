@@ -65,6 +65,7 @@ public class XmlApi {
 		arquivo.alias("IdentificacaoParlamentar",IdentificacaoParlamentar.class);
 		arquivo.alias("DadosBasicosParlamentar",DadosBasicosParlamentar.class);
 		arquivo.alias("MandatoAtual",Mandato.class);
+		arquivo.alias("UltimoMandato",Mandato.class);
 		arquivo.alias("Comissao",Comissao.class);
 		arquivo.alias("FiliacaoAtual",FiliacaoAtual.class);
 		arquivo.alias("Lideranca",Lideranca.class);

@@ -6,14 +6,18 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.mysenador.mysenador.analyzer.Analyzer;
 import br.com.mysenador.mysenador.extractor.XmlApi;
+import br.com.mysenador.mysenador.model.Categorias;
 import br.com.mysenador.mysenador.model.Comissao;
 import br.com.mysenador.mysenador.model.DadosBasicosParlamentar;
 import br.com.mysenador.mysenador.model.Exercicio;
@@ -31,6 +35,7 @@ import br.com.mysenador.mysenador.model.SegundaLegislaturaDoMandato;
 import br.com.mysenador.mysenador.model.Senado;
 import br.com.mysenador.mysenador.model.Suplente;
 import br.com.mysenador.mysenador.model.Titular;
+import br.com.mysenador.mysenador.repository.CategoriasRep;
 import br.com.mysenador.mysenador.repository.ComissaoRep;
 import br.com.mysenador.mysenador.repository.DadosBasicosParlamentarRep;
 import br.com.mysenador.mysenador.repository.ExercicioRep;
@@ -78,6 +83,8 @@ public class FerramentasController {
 	protected MateriasAutoriaRep materiasrep;
 	@Autowired
 	protected IdentificacaoMateriaRep idmateriarep;
+	@Autowired
+	protected CategoriasRep categoriarep;
 	
 	
 	protected FiliacaoAtual filiacao =new  FiliacaoAtual();
@@ -98,6 +105,8 @@ public class FerramentasController {
 	protected Titular titular =new Titular();
 	protected List<Comissao> comissao = new ArrayList<Comissao>();
 	protected MateriasAutoria autoria =new MateriasAutoria() ;
+	protected Analyzer analisador = new Analyzer();
+	protected Categorias categorias = new Categorias();
 	
 	
 	//função que salva todos os objetos IdentificacaoParlamentar no banco de dados
@@ -108,7 +117,7 @@ public class FerramentasController {
 	  String  xml =requesturl.toString(url); 
 	  Senado senado = xmlapi.converte(xml); 
 	  
-	  for(int i = 0;i<81;i++){ 
+	  for(int i = 0;i<senado.getParlamentares().size();i++){ 
 		  
 		  identificacao.add(senado.getParlamentares().get(i).getIdentificacaoParlamentar()); 
 		  System.out.printf("Parlamentar numero:%d",i);
@@ -119,7 +128,7 @@ public class FerramentasController {
 	  return "teste"; 
 	}
 	
-	
+	//metodo que salva todos os objetos dadosdetalhados,filiação,partido,mandato e materias no banco de dados
 	@RequestMapping("dados")
 	public String salvaDadosBasicosParlamantares() {
 
@@ -139,9 +148,11 @@ public class FerramentasController {
 			
 			dadosb.setId(parldet.getParlamentar().getIdentificacaoParlamentar().getCodigoParlamentar());
 			filiacao.setId(parldet.getParlamentar().getIdentificacaoParlamentar().getCodigoParlamentar());
-			
-			mandato = parldet.getParlamentar().getMandatoAtual();
-			
+			if(parldet.getParlamentar().getMandatoAtual() != null) {
+				mandato = parldet.getParlamentar().getMandatoAtual();
+			}else {
+				mandato= parldet.getParlamentar().getUlltimoMandato();
+			}
 			primeira = parldet.getParlamentar().getMandatoAtual().getPrimeiraLegislaturaDoMandato();
 			segunda = parldet.getParlamentar().getMandatoAtual().getSegundaLegislaturaDoMandato();
 			exercicios =parldet.getParlamentar().getMandatoAtual().getExercicios();
@@ -151,25 +162,25 @@ public class FerramentasController {
 			
 			mandato.setId(parldet.getParlamentar().getIdentificacaoParlamentar().getCodigoParlamentar());
 			autoria.setId(parldet.getParlamentar().getIdentificacaoParlamentar().getCodigoParlamentar());
-			
-			for(int j=0;j<parldet.getParlamentar().getMateriasDeAutoriaTramitando().size();j++){
-				if(parldet.getParlamentar().getMateriasDeAutoriaTramitando().get(j).getIdentificacaoMateria().getSiglaSubtipoMateria().equals("PLS")) {
-					materias.add(parldet.getParlamentar().getMateriasDeAutoriaTramitando().get(j));	
+			if (parldet.getParlamentar().getMateriasDeAutoriaTramitando() != null) {
+				for(int j=0;j<parldet.getParlamentar().getMateriasDeAutoriaTramitando().size();j++){
+					if(parldet.getParlamentar().getMateriasDeAutoriaTramitando().get(j).getIdentificacaoMateria().getSiglaSubtipoMateria().equals("PLS")) {
+						materias.add(parldet.getParlamentar().getMateriasDeAutoriaTramitando().get(j));	
+					}
 				}
-			}
-			for(int k =0;k<materias.size();k++) {
-				materias.get(k).setId(materias.get(k).getIdentificacaoMateria().getCodigoMateria());
-				autoria.add(materias.get(k));
-				System.out.println(materias.get(k).getId());
-			}
-			
-						
-			for(int n =0; n<materias.size();n++) {
+				autoria.setNumero_PLS(materias.size());
+				for(int k =0;k<materias.size();k++) {
+					materias.get(k).setId(materias.get(k).getIdentificacaoMateria().getCodigoMateria());
+					autoria.add(materias.get(k));
+					System.out.println(materias.get(k).getId());
+				}
+				for(int n =0; n<materias.size();n++) {
 					idmateria.add(materias.get(n).getIdentificacaoMateria());
 					
 				
+				}
 			}
-			
+		
 			
 			dadosbasicosRep.save(dadosb);
 			partidorep.save(partido);
@@ -216,6 +227,22 @@ public class FerramentasController {
 		return "teste";
 	}
 	
+	@RequestMapping("/analiza/pls")
+	public String analiza_pls(@RequestParam int id) {
+		Optional<MateriasAutoria>materiasop = materiasrep.findById(id);
+		autoria.preenche(autoria, materiasop);
+		
+		
+		return "index1";
+	}
+	@RequestMapping("/salva/categoria")
+	public String categorias(@RequestParam String categoria) {
+		
+		categorias.setCategoria(categoria);
+		categoriarep.save(categorias);
+		
+		return"index1";
+	}
 	
 	
 }

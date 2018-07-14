@@ -27,6 +27,9 @@ public class Parlamentar {
 	@OneToOne
 	protected Mandato MandatoAtual;
 	@OneToOne
+	protected Mandato UlltimoMandato;
+	
+	@OneToOne
 	protected FiliacaoAtual FiliacaoAtual;
 	@OneToMany
 	protected List<Comissao> MembroAtualComissoes =new ArrayList<Comissao>();
@@ -184,6 +187,15 @@ public class Parlamentar {
 	public void setOutrasInformacoes(List<Servico> outrasInformacoes) {
 		OutrasInformacoes = outrasInformacoes;
 	}
+
+	public Mandato getUlltimoMandato() {
+		return UlltimoMandato;
+	}
+
+	public void setUlltimoMandato(Mandato ulltimoMandato) {
+		UlltimoMandato = ulltimoMandato;
+	}
+	
 	
 	
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -16,8 +17,17 @@ public class MateriasAutoria {
 	protected Integer id;
 	@OneToMany
 	protected List<Materia> materias = new ArrayList<Materia>();
+	@Column
+	protected Integer Numero_PLS;
 	
 	
+	
+	public Integer getNumero_PLS() {
+		return Numero_PLS;
+	}
+	public void setNumero_PLS(Integer numero_PLS) {
+		Numero_PLS = numero_PLS;
+	}
 	public Integer getId() {
 		return id;
 	}
