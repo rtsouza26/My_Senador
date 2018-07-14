@@ -10,10 +10,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name= "identificacaomateria")
 public class IdentificacaoMateria {
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Integer id;
-	@Column
 	protected Integer CodigoMateria;
 	@Column
 	protected String SiglaCasaIdentificacaoMateria;
@@ -31,12 +29,7 @@ public class IdentificacaoMateria {
 	
 	
 	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	
 	public Integer getCodigoMateria() {
 		return CodigoMateria;
 	}

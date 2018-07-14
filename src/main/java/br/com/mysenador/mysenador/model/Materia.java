@@ -18,7 +18,6 @@ public class Materia {
 	@Id
 	protected Integer id;
 	@OneToOne
-	@Cascade({CascadeType.SAVE_UPDATE})
 	protected IdentificacaoMateria IdentificacaoMateria;
 	@Column(columnDefinition="TEXT")
 	protected String EmentaMateria;

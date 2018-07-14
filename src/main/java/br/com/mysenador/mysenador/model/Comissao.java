@@ -30,13 +30,32 @@ public class Comissao {
 	
 	
 	
-	public Comissao(IdentificacaoComissao identificacaoComissao,
-			String descricaoParticipacao, String dataInicio) {
 	
-		IdentificacaoComissao = identificacaoComissao;
-		DescricaoParticipacao = descricaoParticipacao;
-		DataInicio = dataInicio;
+	
+	public Integer getId() {
+		return id;
 	}
+
+
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+
+
+	public String getDataFim() {
+		return DataFim;
+	}
+
+
+
+	public void setDataFim(String dataFim) {
+		DataFim = dataFim;
+	}
+
+
+
 	public IdentificacaoComissao getIdentificacaoComissao() {
 		return IdentificacaoComissao;
 	}

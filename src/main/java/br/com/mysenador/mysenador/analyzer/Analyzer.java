@@ -4,6 +4,6 @@ public class Analyzer {
 
 	public boolean analisar(String conteudo, String parametro ) {
 		
-		return conteudo.contentEquals(parametro);
+		return conteudo.contains(parametro);
 	}
 }

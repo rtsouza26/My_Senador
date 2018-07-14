@@ -52,6 +52,7 @@ public class MateriasAutoria {
 	public void preenche(MateriasAutoria materias, Optional<MateriasAutoria>materiasop ) {
 		materias.setId(materiasop.get().getId());
 		materias.setMaterias(materiasop.get().getMaterias());
+		materias.setNumero_PLS(materiasop.get().getNumero_PLS());
 		
 	}
 	

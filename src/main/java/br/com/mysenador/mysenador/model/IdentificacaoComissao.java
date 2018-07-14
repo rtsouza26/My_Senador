@@ -9,7 +9,7 @@ import javax.persistence.Table;
 @Table(name= "identificacaocomissao")
 public class IdentificacaoComissao {
 	@Id
-	protected String CodigoComissao;
+	protected Integer CodigoComissao;
 	@Column
 	protected String SiglaComissao;
 	@Column
@@ -21,10 +21,10 @@ public class IdentificacaoComissao {
 	
 	
 	
-	public String getCodigoComissao() {
+	public Integer getCodigoComissao() {
 		return CodigoComissao;
 	}
-	public void setCodigoComissao(String codigoComissao) {
+	public void setCodigoComissao(Integer codigoComissao) {
 		CodigoComissao = codigoComissao;
 	}
 	public String getSiglaComissao() {
