@@ -211,7 +211,7 @@ public class FerramentasController {
 				autoria.setId(parldet.getParlamentar().getIdentificacaoParlamentar().getCodigoParlamentar());
 				for (int j = 0; j < parldet.getParlamentar().getMateriasDeAutoriaTramitando().size(); j++) {
 					if (parldet.getParlamentar().getMateriasDeAutoriaTramitando().get(j).getIdentificacaoMateria()
-							.getSiglaSubtipoMateria().equals("PLS")) {
+							.getSiglaSubtipoMateria().equalsIgnoreCase("PLS")) {
 						materias.add(parldet.getParlamentar().getMateriasDeAutoriaTramitando().get(j));
 					}
 				}
@@ -272,6 +272,7 @@ public class FerramentasController {
 			System.out.printf("Processando pls do parlamentar: %s cod:%d \n", identificacao.get(i).getNomeParlamentar(),
 					identificacao.get(i).getCodigoParlamentar());
 			System.out.println("\n");
+			
 			Optional<MateriasAutoria> materiasop = materiasrep.findById(identificacao.get(i).getCodigoParlamentar());
 			if (materiasop.isPresent()) {
 				autoria.preenche(autoria, materiasop);
@@ -285,7 +286,7 @@ public class FerramentasController {
 							if (analisador.analisar(autoria.getMaterias().get(n).getEmentaMateria(),
 									categorias.get(j).getCategoria())) {
 								System.out.println("\n");
-								System.out.printf("Categoria %s emcontrada na materia cod: %d \n",
+								System.out.printf("Categoria %s encontrada na materia cod: %d \n",
 										categorias.get(j).getCategoria(), autoria.getMaterias().get(n).getId());
 								System.out.println("\n");
 								autoria.getMaterias().get(n).setCategoria(categorias.get(j).getCategoria());
@@ -301,17 +302,52 @@ public class FerramentasController {
 		return "index1";
 	}
 
-	@RequestMapping("categoria")
-	public String categorias(@RequestParam String categoria) {
 
-		categorias.setCategoria(categoria);
-		categoriarep.save(categorias);
-
-		return "index1";
-	}
 
 	public String parlamentar_categoria(@RequestParam int id) {
 
 		return "index1";
 	}
+	@RequestMapping("teste")
+	public String teste() {
+		identificacao = (List<IdentificacaoParlamentar>) idparlamentarRep.findAll();
+		List<Categorias> categorias = (List<Categorias>) categoriarep.findAll();
+		
+		
+		for (int i = 0; i < identificacao.size(); i++) {
+			System.out.println("\n");
+			System.out.printf("Processando pls do parlamentar: %s cod:%d \n", identificacao.get(i).getNomeParlamentar(),
+					identificacao.get(i).getCodigoParlamentar());
+			System.out.println("\n");
+			
+			Optional<MateriasAutoria> materiasop = materiasrep.findById(identificacao.get(i).getCodigoParlamentar());
+			if (materiasop.isPresent()) {
+				autoria.preenche(autoria, materiasop);
+				int pls = 0;
+				for (int j = 0; j < categorias.size(); j++) {
+					System.out.println(categorias.get(j).getCategoria());
+					if (autoria.getMaterias() != null) {
+						for (int n = 0; n < autoria.getMaterias().size(); n++) {
+							// System.out.println(materiasop.get().getNumero_PLS());
+							// System.out.println(materiasop.get().getMaterias().get(n).getId());
+							if (analisador.analisar(autoria.getMaterias().get(n).getEmentaMateria(),
+									categorias.get(j).getCategoria())) {
+								System.out.println("\n");
+								System.out.printf("Categoria %s encontrada na materia cod: %d \n",
+										categorias.get(j).getCategoria(), autoria.getMaterias().get(n).getId());
+								System.out.println("\n");
+								autoria.getMaterias().get(n).setCategoria(categorias.get(j).getCategoria());
+								materiaRep.save(autoria.getMaterias().get(n));
+								
+							}
+						}
+
+					}
+				}
+			}
+		}
+		return "teste";
+		
+	}
 }
+	
