@@ -8,11 +8,15 @@ import java.util.Map;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.mysenador.mysenador.model.Categorias;
@@ -20,6 +24,7 @@ import br.com.mysenador.mysenador.repository.CategoriasRep;
 
 
 @RestController
+
 public class CategoriasController {
 
 	@Autowired
@@ -27,6 +32,7 @@ public class CategoriasController {
 	protected Categorias categorias = new Categorias();
 	List<Categorias> cat = new ArrayList<Categorias>();
 	
+	@CrossOrigin(origins = {"*"})
 	@RequestMapping("categoria")
 	public String categorias(@RequestParam String categoria) {
 
@@ -42,10 +48,28 @@ public class CategoriasController {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String,Object> map = new HashMap<>();
-		 cat = (List<Categorias>) categoriarep.findAll();
+		cat = (List<Categorias>) categoriarep.findAll();
 		
-		    map.put("categories", cat);
+		map.put("categories", cat);
 			
-			return mapper.writeValueAsString(map);
+		return mapper.writeValueAsString(map);
+	}
+	
+	@CrossOrigin(origins = {"*"})
+	@RequestMapping(value = "api/categories/calculate", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String calcularCategorias(@RequestBody String categories) throws IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		Map<String,Object> map = new HashMap<>();
+		try {
+			map = mapper.readValue(categories, Map.class);
+			System.out.println(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return mapper.writeValueAsString(map);
 	}
 }

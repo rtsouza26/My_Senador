@@ -59,7 +59,7 @@ public class SenadoController {
 	//public String index() {
 	//	return "index";
 	//}
-	@CrossOrigin(origins = {"http://localhost:8100","http://localhost:8080"})
+	@CrossOrigin(origins = {"*"})
 	@RequestMapping("/")
 	public ModelAndView index1() {
 int y =0;
@@ -99,7 +99,7 @@ int y =0;
 	}
 
 	
-	@CrossOrigin(origins = {"http://localhost:8100","http://localhost:8080"})
+	@CrossOrigin(origins = {"*"})
 	@RequestMapping("/api/senators/all")
 	public String indexapi(Model model) throws JsonProcessingException {
 		
