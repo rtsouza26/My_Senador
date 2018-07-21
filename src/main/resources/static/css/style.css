@@ -1462,7 +1462,7 @@ body input.colors {
 .box .uploader span.action {
 	padding: 10px 0;
 	height: 15px;
-	border-radius: 0 4px 4px 0;
+	border-radfs: 0 4px 4px 0;
 	font-weight: normal;
 	display: block;
 	float: left;

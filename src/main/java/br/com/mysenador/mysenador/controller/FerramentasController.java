@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import br.com.mysenador.mysenador.analyzer.Analyzer;
 import br.com.mysenador.mysenador.extractor.XmlApi;
@@ -122,6 +123,19 @@ public class FerramentasController {
 	protected Categorias categorias = new Categorias();
 	protected CategoriasPorParlamentar catparl = new CategoriasPorParlamentar();
 	protected int id = 0;
+	
+	
+	
+	@RequestMapping("/ferramenta")
+	public ModelAndView ferramenta() {
+		int y =0;
+		ModelAndView model = new ModelAndView("charts");
+		model.addObject("contador", y);
+		for(int i = 0; i<81;i++) {
+			y++;
+		}
+		return model;
+	}
 
 	// função que salva todos os objetos IdentificacaoParlamentar no banco de dados
 	@RequestMapping("/salva")

@@ -40,6 +40,9 @@ import br.com.mysenador.mysenador.repository.SegundaLegislaturaRep;
 import br.com.mysenador.mysenador.repository.SuplenteRep;
 import br.com.mysenador.mysenador.util.HtmlRequest;
 
+
+
+
 @RestController
 public class ParlamentarController {
 	
@@ -72,6 +75,7 @@ public class ParlamentarController {
 	List<IdentificacaoParlamentar> identificacao = new ArrayList<IdentificacaoParlamentar>();
 	protected ParlamentarDetalhado parldet =new ParlamentarDetalhado();
 	
+	@CrossOrigin(origins = {"http://localhost:8100","http://localhost:8080"})
 	@RequestMapping("informa")
 	public ModelAndView informa(@RequestParam int id) {
 

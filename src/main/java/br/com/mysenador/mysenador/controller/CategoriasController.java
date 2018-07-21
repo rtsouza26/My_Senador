@@ -36,7 +36,7 @@ public class CategoriasController {
 		return "index1";
 	}
 	
-	@CrossOrigin(origins = {"http://localhost:8100","http://localhost:8080"})
+	@CrossOrigin(origins = {"*"})
 	@RequestMapping("/api/categories/all")
 	public String todascategorias() throws IOException {
 		

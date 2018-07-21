@@ -62,7 +62,7 @@ public class SenadoController {
 	@CrossOrigin(origins = {"http://localhost:8100","http://localhost:8080"})
 	@RequestMapping("/")
 	public ModelAndView index1() {
-
+int y =0;
 		ModelAndView model = new ModelAndView("db");
 		//String xml = requesturl.toString(url);
 		//senado = xmlapi.converte(xml);
@@ -70,11 +70,15 @@ public class SenadoController {
 		// for(int i = 0;i<81;i++){
 		// parlamentar1.add(senado.getParlamentares().get(i));
 		// }
+		
+		for(int i = 0; i<81;i++) {
+			y++;
+		}
 		identificacao = null;
 		identificacao = (List<IdentificacaoParlamentar>) idsalva.findAll();
 
 		model.addObject("Parl", identificacao);
-
+		model.addObject("contador", y);
 		return model;
 
 	}
@@ -95,7 +99,7 @@ public class SenadoController {
 	}
 
 	
-
+	@CrossOrigin(origins = {"http://localhost:8100","http://localhost:8080"})
 	@RequestMapping("/api/senators/all")
 	public String indexapi(Model model) throws JsonProcessingException {
 		
@@ -109,16 +113,25 @@ public class SenadoController {
 			ident = ident + xmlapi.identToJson(identificacao.get(i));
 		}
 		
-		//String xml = requesturl.toString(url);
-		//senado = xmlapi.converte(xml);
-		//String desconverte = xmlapi.senadoToJson(senado);
+		try {
+			String xml = requesturl.toString(url);
+			senado = xmlapi.converte(xml);
+			//String desconverte = xmlapi.desconverte(senado);
+			//map.put("senators", identificacao);
+			map.put("senators", senado);
+			return mapper.writeValueAsString(map);
+				} catch (JsonProcessingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						return null;
+					}
 		
-		map.put("senators", identificacao);
-		model.addAttribute("descon", ident);
-		model.addAttribute("descon1",map);
+		//map.put("senators", identificacao);
+		//model.addAttribute("descon", ident);
+		//model.addAttribute("descon1",map);
 		
 
-		return mapper.writeValueAsString(map);
+		//return mapper.writeValueAsString(map);
 
 	}
 	

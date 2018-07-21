@@ -14,7 +14,8 @@ License: http://creativecommons.org/licenses/MIT
 <!--[if lt IE 7]><html class="no-js ie6 oldie" lang="en"><![endif]-->
 <!--[if (IE 7)&!(IEMobile)]><html class="no-js ie7 oldie" lang="en"><![endif]-->
 <!--[if (IE 8)&!(IEMobile)]><html class="no-js ie8 oldie" lang="en"><![endif]-->
-<!--[if gt IE 8]><!-->
+<!--[if gt IE 8]><!--><!--<![endif]-->
+<!--[if (gte IE 9)|(gt IEMobile 7)]><!--><!--<![endif]-->
 <html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="en">
 <!--<![endif]-->
 
@@ -49,8 +50,8 @@ License: http://creativecommons.org/licenses/MIT
 						</tr>
 					</thead>
 					<tbody>
-
-						<tr th:each="parl:${Parl}">
+						
+						<tr th:each="parl:${Parl}" class="progressbarwithvalue animated mt15">
 							<!--<td class="readonly check"><input name="check1"
 								type="checkbox" /></td>-->
 							<td><span th:text="${parl.CodigoParlamentar}"></span></td>
