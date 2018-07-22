@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -126,34 +127,39 @@ public class FerramentasController {
 	
 	
 	
-	@RequestMapping("/ferramenta")
-	public ModelAndView ferramenta() {
-		int y =0;
-		ModelAndView model = new ModelAndView("charts");
-		model.addObject("contador", y);
-		for(int i = 0; i<81;i++) {
-			y++;
-		}
-		return model;
+	@RequestMapping("ferramenta")
+	public String ferramenta() {
+		
+		
+		
+		return "charts";
 	}
 
 	// função que salva todos os objetos IdentificacaoParlamentar no banco de dados
-	@RequestMapping("/salva")
-	public String salvaIdentificacaoParlamentar() {
+	@RequestMapping(value = "salva", method = RequestMethod.POST)
+	public ModelAndView salvaIdentificacaoParlamentar() {
 
 		String url = "http://legis.senado.leg.br/dadosabertos/senador/lista/atual";
 		String xml = requesturl.toString(url);
 		Senado senado = xmlapi.converte(xml);
-
-		for (int i = 0; i < senado.getParlamentares().size(); i++) {
+		ModelAndView model = new ModelAndView("charts");
+		boolean teste = false;
+		int i = 0;
+		for ( i = 0; i < senado.getParlamentares().size(); i++) {
 
 			identificacao.add(senado.getParlamentares().get(i).getIdentificacaoParlamentar());
 			System.out.printf("Parlamentar numero:%d", i);
-			idparlamentarRep.save(identificacao.get(i));
-
+			
+			
 		}
-
-		return "teste";
+		idparlamentarRep.saveAll(identificacao);
+		if (idparlamentarRep.count() == (long)i) {
+			teste = true;
+		}
+		model.addObject("teste", teste);
+		
+		return model;
+		
 	}
 
 	// metodo que salva todos os objetos dadosdetalhados,filiação,partido,mandato e

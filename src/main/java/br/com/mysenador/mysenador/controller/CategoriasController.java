@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -57,19 +57,16 @@ public class CategoriasController {
 	
 	@CrossOrigin(origins = {"*"})
 	@RequestMapping(value = "api/categories/calculate", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String calcularCategorias(@RequestBody String categories) throws IOException {
+	public void calcularCategorias(@RequestBody String categories) throws IOException {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		Map<String,Object> map = new HashMap<>();
-		try {
-			map = mapper.readValue(categories, Map.class);
-			System.out.println(map);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+		cat = mapper.readValue(categories, new TypeReference<List<Categorias>>(){});
+		for(int i =0;i<cat.size();i++) {
+			System.out.println(cat.get(i).getCategoria());
 		}
 		
-		return mapper.writeValueAsString(map);
+		
+
 	}
 }

@@ -10,7 +10,8 @@ import javax.persistence.Id;
 public class Categorias {
 	@Id
 	protected String Categoria;
-
+	protected String Checked;
+	
 	public String getCategoria() {
 		return Categoria;
 	}

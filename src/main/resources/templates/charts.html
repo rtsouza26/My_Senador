@@ -23,7 +23,36 @@ License: http://creativecommons.org/licenses/MIT
 
 
 <div class="box twothirds">
-		<div class="boxheading clearfix"><h3>Form elements</h3><a class="move"></a></div>
+		<div class="boxheading clearfix"><h3>Dados Iniciais</h3><a class="move"></a></div>
+		<section class="clearfix">
+			<div class="grid_5 suffix_1">
+					<div class="row">
+						
+						<div class="clear">&nbsp;</div>
+						<form th:action = "salva" th:method = "post">
+						<button  type="submit"class ="btn green mrb5" >Salva Dados iniciais dos Senadores</button>
+						</form>
+						
+						<div class="clear">&nbsp;</div>
+						<h5 th:if= "${teste} == true">informações salvas com sucesso</h5>
+						
+					</div>
+					</div>
+					</section>
+					<div class="boxheading clearfix"><h3>Form elements</h3><a class="move"></a></div>
+		<section class="clearfix">
+			<div class="grid_5 suffix_1">
+					<div class="row">
+						<label>Input with placeholder:</label>
+						<input type="text" placeholder="Sample placeholder" />
+						<div class="clear">&nbsp;</div>
+						<a class="btn green mrb5">green</a>
+						<div class="clear">&nbsp;</div>
+						
+					</div>
+					</div>
+					</section>
+					<div class="boxheading clearfix"><h3>Form elements</h3><a class="move"></a></div>
 		<section class="clearfix">
 			<div class="grid_5 suffix_1">
 					<div class="row">
