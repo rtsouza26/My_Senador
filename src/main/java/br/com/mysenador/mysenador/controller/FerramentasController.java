@@ -11,10 +11,10 @@ import java.util.Optional;
 import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.mysenador.mysenador.analyzer.Analyzer;
@@ -60,7 +60,7 @@ import br.com.mysenador.mysenador.repository.SuplenteRep;
 import br.com.mysenador.mysenador.repository.TitularRep;
 import br.com.mysenador.mysenador.util.HtmlRequest;
 
-@RestController
+@Controller
 public class FerramentasController {
 
 	@Autowired
@@ -128,11 +128,11 @@ public class FerramentasController {
 	
 	
 	@RequestMapping("ferramenta")
-	public String ferramenta() {
+	public ModelAndView ferramenta() {
 		
+		ModelAndView model= new ModelAndView("charts");
 		
-		
-		return "charts";
+		return model;
 	}
 
 	// função que salva todos os objetos IdentificacaoParlamentar no banco de dados
@@ -164,9 +164,9 @@ public class FerramentasController {
 
 	// metodo que salva todos os objetos dadosdetalhados,filiação,partido,mandato e
 	// materias no banco de dados
-	@RequestMapping("dados")
-	public String salvaDadosBasicosParlamantares() {
-
+	@RequestMapping(value = "dados_completos", method = RequestMethod.POST)
+	public ModelAndView salvaDadosBasicosParlamantares() {
+		ModelAndView model = new ModelAndView("charts");
 		identificacao = (List<IdentificacaoParlamentar>) idparlamentarRep.findAll();
 
 		for (int i = 0; i < identificacao.size(); i++) {
@@ -260,7 +260,7 @@ public class FerramentasController {
 
 		}
 
-		return "teste";
+		return model;
 
 	}
 
