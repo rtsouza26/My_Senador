@@ -10,7 +10,7 @@ public class Analyzer {
 	public boolean analisar(String conteudo, String parametro) {
 		boolean teste = false;
 		if (parametro.equals("saúde")) {
-			String regex = "(remédios)|(vacinação)|(hospital)|(hospitais)|(médicos)|(médico)|(pacientes)|(paciente)|(advertência)|(teste)(\\s)(do)(\\s)(olhinho)|(medicamentos)|(normas)(\\s)(básicas)(\\s)(sobre)(\\s)(alimentos)";
+			String regex = "(remédios)|(vacinação)|(hospital)|(hospitais)|(médicos)|(médico)|(pacientes)|(paciente)|(advertência)|(teste)(\\s)(do)(\\s)(olhinho)|(medicamentos)|(normas)(\\s)(básicas)(\\s)(sobre)(\\s)(alimentos)|(idoso)";
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {
@@ -20,15 +20,6 @@ public class Analyzer {
 			}
 		} else if (parametro.equals("previdência")) {
 			String regex = "(aposentadoria)|(aposentados)|(previdência)|(previdência)(\\s)(social)|(aposentadorias)";
-			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-			Matcher procura = expres.matcher(conteudo);
-			while (procura.find()) {
-				System.out.println("mach encontrado na posição: " + procura.start()
-						+ conteudo.substring(procura.start(), procura.end()));
-				teste = true;
-			}
-		} else if (parametro.equals("imposto")) {
-			String regex = "(imposto)|(impostos)|(Imposto)(\\s)(de)(\\s)(Renda)|(IOF)|(tributário)|(fiscal)|(tributos)(\\s)(federais)|(tarifas)";
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {
@@ -63,17 +54,9 @@ public class Analyzer {
 						+ conteudo.substring(procura.start(), procura.end()));
 				teste = true;
 			}
-		} else if (parametro.equals("idoso")) {
-			String regex = "(idoso)";
-			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-			Matcher procura = expres.matcher(conteudo);
-			while (procura.find()) {
-				System.out.println("mach encontrado na posição: " + procura.start()
-						+ conteudo.substring(procura.start(), procura.end()));
-				teste = true;
-			}
+		
 		} else if (parametro.equals("segurança")) {
-			String regex = "(criminosa)|(segurança)|(código)(\\s)(Penal)|(exame)(\\s)(criminológico)|(penal)|(proteção)(\\s)(às)(\\s)(vítimas)|(estatuto)(\\s)(do)(\\s)(desarmamento)|(pornografia)(\\s)(infatil)";
+			String regex = "(criminosa)|(segurança)|(código)(\\s)(Penal)|(exame)(\\s)(criminológico)|(penal)|(proteção)(\\s)(às)(\\s)(vítimas)|(estatuto)(\\s)(do)(\\s)(desarmamento)|(pornografia)(\\s)(infatil)|(funpen)";
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {
@@ -82,7 +65,7 @@ public class Analyzer {
 				teste = true;
 			}
 		} else if (parametro.equals("ambiental")) {
-			String regex = "(ambiental)|(renováveis)|(floresta)";
+			String regex = "(ambiental)|(renováveis)|(floresta)|(recursos)(\\s)(hídricos)";
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {
@@ -90,7 +73,7 @@ public class Analyzer {
 						+ conteudo.substring(procura.start(), procura.end()));
 				teste = true;
 			}
-		} else if (parametro.equals("transito")) {
+		} else if (parametro.equals("mobilidade")) {
 			String regex = "(código)(\\s)(de)(\\s)(trânsito)(\\s)(brasileiro)|(motorista)(\\s)(profissional)";
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
@@ -109,7 +92,7 @@ public class Analyzer {
 				teste = true;
 			}
 		} else if (parametro.equals("economia")) {
-			String regex = "(economia)|(empresas)(\\s)(públicas)|(sociedade)(\\s)(empresária)|(instituições)(\\s)(monetárias)";
+			String regex = "(economia)|(empresas)(\\s)(públicas)|(sociedade)(\\s)(empresária)|(instituições)(\\s)(monetárias)|(abertura)(\\s)(e)(\\s)(fechamento)(\\s)(de)(\\s)(empresas)|(empreendedorismo)|(imposto)|(impostos)|(Imposto)(\\\\s)(de)(\\\\s)(Renda)|(IOF)|(tributário)|(fiscal)|(tributos)(\\\\s)(federais)|(tarifas)|(tributos)|(reforma)(\\s)(agrária)";
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {
@@ -117,8 +100,18 @@ public class Analyzer {
 						+ conteudo.substring(procura.start(), procura.end()));
 				teste = true;
 			}
-		} else if (parametro.equals("cidades")) {
-			String regex = "(saneamento)(\\s)(básico)|(municípios)";
+		} else if (parametro.equals("cidadania")) {
+			String regex = "(saneamento)(\\s)(básico)|(municípios)|(estatísticas)(\\s)(oficiais)";
+			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+			Matcher procura = expres.matcher(conteudo);
+			while (procura.find()) {
+				System.out.println("mach encontrado na posição: " + procura.start()
+						+ conteudo.substring(procura.start(), procura.end()));
+				teste = true;
+			}
+			
+		} else if (parametro.equals("tecnologia")) {
+			String regex = "(tecnologia)|(ciências)";
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {

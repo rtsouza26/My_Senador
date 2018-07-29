@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.imageio.ImageIO;
@@ -14,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.mysenador.mysenador.analyzer.Analyzer;
@@ -124,14 +125,12 @@ public class FerramentasController {
 	protected Categorias categorias = new Categorias();
 	protected CategoriasPorParlamentar catparl = new CategoriasPorParlamentar();
 	protected int id = 0;
-	
-	
-	
+
 	@RequestMapping("ferramenta")
 	public ModelAndView ferramenta() {
-		
-		ModelAndView model= new ModelAndView("charts");
-		
+
+		ModelAndView model = new ModelAndView("charts");
+
 		return model;
 	}
 
@@ -145,21 +144,20 @@ public class FerramentasController {
 		ModelAndView model = new ModelAndView("charts");
 		boolean teste = false;
 		int i = 0;
-		for ( i = 0; i < senado.getParlamentares().size(); i++) {
+		for (i = 0; i < senado.getParlamentares().size(); i++) {
 
 			identificacao.add(senado.getParlamentares().get(i).getIdentificacaoParlamentar());
 			System.out.printf("Parlamentar numero:%d", i);
-			
-			
+
 		}
 		idparlamentarRep.saveAll(identificacao);
-		if (idparlamentarRep.count() == (long)i) {
+		if (idparlamentarRep.count() == (long) i) {
 			teste = true;
 		}
 		model.addObject("teste", teste);
-		
+
 		return model;
-		
+
 	}
 
 	// metodo que salva todos os objetos dadosdetalhados,filiação,partido,mandato e
@@ -226,7 +224,7 @@ public class FerramentasController {
 				// comissaopartrep.save(comissaopart);
 			}
 
-			if (parldet.getParlamentar().getMateriasDeAutoriaTramitando() != null) {
+	/*		if (parldet.getParlamentar().getMateriasDeAutoriaTramitando() != null) {
 
 				autoria.setId(parldet.getParlamentar().getIdentificacaoParlamentar().getCodigoParlamentar());
 				for (int j = 0; j < parldet.getParlamentar().getMateriasDeAutoriaTramitando().size(); j++) {
@@ -257,11 +255,52 @@ public class FerramentasController {
 			autoria.clear();
 			idcomissao.clear();
 			comissao.clear();
-
+*/
 		}
 
 		return model;
 
+	}
+	@RequestMapping("salva_materias")
+	public String salva_materias() {
+		
+		identificacao = (List<IdentificacaoParlamentar>) idparlamentarRep.findAll();
+		
+		System.out.printf("Salvando dados, partido e filiação do parlamentar: %s cod:%d \n",
+				identificacao.get(3).getNomeParlamentar(), identificacao.get(3).getCodigoParlamentar());
+
+		String url = "http://legis.senado.leg.br/dadosabertos/senador/"
+				+ identificacao.get(3).getCodigoParlamentar();
+		String xml = requesturl.toString(url);
+		parldet = xmlapi.parlamentarconverte(xml);
+
+	
+		if (parldet.getParlamentar().getMateriasDeAutoriaTramitando() != null) {
+			
+			autoria.setId(parldet.getParlamentar().getIdentificacaoParlamentar().getCodigoParlamentar());
+			for (int j = 0; j < parldet.getParlamentar().getMateriasDeAutoriaTramitando().size(); j++) {
+				if (parldet.getParlamentar().getMateriasDeAutoriaTramitando().get(j).getIdentificacaoMateria()
+						.getSiglaSubtipoMateria().equalsIgnoreCase("PLS")||parldet.getParlamentar().getMateriasDeAutoriaTramitando().get(j).getIdentificacaoMateria()
+						.getSiglaSubtipoMateria().equalsIgnoreCase("PEC")) {
+					materias.add(parldet.getParlamentar().getMateriasDeAutoriaTramitando().get(j));
+				}
+			}
+			autoria.setNumero_PLS(materias.size());
+			for (int n = 0; n < materias.size(); n++) {
+				idmateria.add(materias.get(n).getIdentificacaoMateria());
+				materias.get(n).setId(materias.get(n).getIdentificacaoMateria().getCodigoMateria());
+				autoria.add(materias.get(n));
+				System.out.println(materias.get(n).getId());
+			}
+			idmateriarep.saveAll(idmateria);
+			materiaRep.saveAll(materias);
+			materiasrep.save(autoria);
+			
+			materias.clear();
+			idmateria.clear();
+			autoria.clear();
+		}
+		return "charts";
 	}
 
 	@RequestMapping("foto")
@@ -292,7 +331,7 @@ public class FerramentasController {
 			System.out.printf("Processando pls do parlamentar: %s cod:%d \n", identificacao.get(i).getNomeParlamentar(),
 					identificacao.get(i).getCodigoParlamentar());
 			System.out.println("\n");
-			
+
 			Optional<MateriasAutoria> materiasop = materiasrep.findById(identificacao.get(i).getCodigoParlamentar());
 			if (materiasop.isPresent()) {
 				autoria.preenche(autoria, materiasop);
@@ -301,8 +340,7 @@ public class FerramentasController {
 					// System.out.println(categorias.size());
 					if (autoria.getMaterias() != null) {
 						for (int n = 0; n < autoria.getMaterias().size(); n++) {
-							// System.out.println(materiasop.get().getNumero_PLS());
-							// System.out.println(materiasop.get().getMaterias().get(n).getId());
+
 							if (analisador.analisar(autoria.getMaterias().get(n).getEmentaMateria(),
 									categorias.get(j).getCategoria())) {
 								System.out.println("\n");
@@ -322,24 +360,73 @@ public class FerramentasController {
 		return "index1";
 	}
 
-
-
-	public String parlamentar_categoria(@RequestParam int id) {
-
-		return "index1";
+	@RequestMapping("separa")
+	public String parlamentar_categoria() throws InterruptedException {
+		
+		identificacao = (List<IdentificacaoParlamentar>) idparlamentarRep.findAll();
+		List<Categorias> categorias = (List<Categorias>) categoriarep.findAll();
+		autoria.clear();
+		int PLS =0;
+		
+		System.out.println("\n");
+		System.out.printf("Processando pls do parlamentar: %s cod:%d \n", identificacao.get(3).getNomeParlamentar(),
+				identificacao.get(3).getCodigoParlamentar());
+		System.out.println("\n");
+		Map<String,Integer>map = new HashMap<String,Integer>();
+		Optional<MateriasAutoria> materiasop = materiasrep.findById(identificacao.get(3).getCodigoParlamentar());
+		if (materiasop.isPresent()) {
+			autoria.preenche(autoria, materiasop);
+			catparl.setCodigoParlamentar(identificacao.get(3).getCodigoParlamentar());
+			for (int j = 0; j < categorias.size(); j++) {
+				for (int n = 0; n < autoria.getMaterias().size(); n++) {
+					
+					if(autoria.getMaterias().get(n).getCategoria() != null) {
+						if(autoria.getMaterias().get(n).getCategoria().equals(categorias.get(j).getCategoria())) {
+							PLS++;
+						}
+					}
+				}
+				categorias.get(j).setNumero_PLS(PLS);
+				System.out.println(categorias.get(j).getCategoria());
+				System.out.println(categorias.get(j).getNumero_PLS());
+				//if(categorias.get(j).getNumero_PLS() != null) {
+					Categorias cat = new Categorias();
+					cat.setCategoria(categorias.get(j).getCategoria());
+					cat.setNumero_PLS(categorias.get(j).getNumero_PLS());
+					catparl.add(cat);
+				//}
+				
+				map.put(categorias.get(j).getCategoria(),PLS);
+				System.out.println("\n");
+				System.out.printf("Foram encontradas %d pls's da categoria: %s\n",PLS,
+						categorias.get(j));
+				System.out.println("\n");
+				catparlrep.save(catparl);
+				Thread.sleep(1000);
+				PLS =0;
+			}
+			
+		}
+		
+		System.out.println("\n");
+		System.out.printf("Total de pls's = %d",materiasop.get().getMaterias().size());
+		System.out.println("\n");
+		System.out.println(map);
+			return "index1";
 	}
+	
+
 	@RequestMapping("teste")
 	public String teste() {
 		identificacao = (List<IdentificacaoParlamentar>) idparlamentarRep.findAll();
 		List<Categorias> categorias = (List<Categorias>) categoriarep.findAll();
-		
-		
+
 		for (int i = 0; i < identificacao.size(); i++) {
 			System.out.println("\n");
 			System.out.printf("Processando pls do parlamentar: %s cod:%d \n", identificacao.get(i).getNomeParlamentar(),
 					identificacao.get(i).getCodigoParlamentar());
 			System.out.println("\n");
-			
+
 			Optional<MateriasAutoria> materiasop = materiasrep.findById(identificacao.get(i).getCodigoParlamentar());
 			if (materiasop.isPresent()) {
 				autoria.preenche(autoria, materiasop);
@@ -358,7 +445,7 @@ public class FerramentasController {
 								System.out.println("\n");
 								autoria.getMaterias().get(n).setCategoria(categorias.get(j).getCategoria());
 								materiaRep.save(autoria.getMaterias().get(n));
-								
+
 							}
 						}
 
@@ -367,7 +454,6 @@ public class FerramentasController {
 			}
 		}
 		return "teste";
-		
+
 	}
 }
-	

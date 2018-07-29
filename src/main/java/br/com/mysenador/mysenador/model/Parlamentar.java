@@ -45,21 +45,30 @@ public class Parlamentar {
 	protected List<Servico> OutrasInformacoes = new ArrayList<Servico>();
 	@Column
 	protected String UrlGlossario;
+	@OneToOne
+	protected MateriasAutoria Autoria = new MateriasAutoria();
 	
 	public Parlamentar() {
 		
 	}
 	
+	
+
 	public Parlamentar(Integer id, br.com.mysenador.mysenador.model.IdentificacaoParlamentar identificacaoParlamentar,
-			br.com.mysenador.mysenador.model.DadosBasicosParlamentar dadosBasicosParlamentar, Mandato mandatoAtual,
+			br.com.mysenador.mysenador.model.DadosBasicosParlamentar dadosBasicosParlamentar,
+			br.com.mysenador.mysenador.model.Mandato mandato, br.com.mysenador.mysenador.model.Mandato mandatoAtual,
+			br.com.mysenador.mysenador.model.Mandato ulltimoMandato,
 			br.com.mysenador.mysenador.model.FiliacaoAtual filiacaoAtual, List<Comissao> membroAtualComissoes,
 			List<CargoAtual> cargosAtuais, List<Lideranca> liderancasAtuais, List<Materia> materiasDeAutoriaTramitando,
-			List<Relatoria> relatoriasAtuais, List<Servico> outrasInformacoes, String urlGlossario) {
+			List<Relatoria> relatoriasAtuais, List<Servico> outrasInformacoes, String urlGlossario,
+			MateriasAutoria autoria) {
 		super();
 		this.id = id;
 		IdentificacaoParlamentar = identificacaoParlamentar;
 		DadosBasicosParlamentar = dadosBasicosParlamentar;
+		Mandato = mandato;
 		MandatoAtual = mandatoAtual;
+		UlltimoMandato = ulltimoMandato;
 		FiliacaoAtual = filiacaoAtual;
 		MembroAtualComissoes = membroAtualComissoes;
 		CargosAtuais = cargosAtuais;
@@ -68,7 +77,10 @@ public class Parlamentar {
 		RelatoriasAtuais = relatoriasAtuais;
 		OutrasInformacoes = outrasInformacoes;
 		UrlGlossario = urlGlossario;
+		this.Autoria = autoria;
 	}
+
+
 
 	public DadosBasicosParlamentar getDadosBasicosParlamentar() {
 		return DadosBasicosParlamentar;
@@ -194,6 +206,18 @@ public class Parlamentar {
 
 	public void setUlltimoMandato(Mandato ulltimoMandato) {
 		UlltimoMandato = ulltimoMandato;
+	}
+
+
+
+	public MateriasAutoria getAutoria() {
+		return Autoria;
+	}
+
+
+
+	public void setAutoria(MateriasAutoria autoria) {
+		this.Autoria = autoria;
 	}
 	
 	
