@@ -72,7 +72,6 @@ public class XmlApi {
 		arquivo.alias("Partido",Partido.class);
 		arquivo.alias("CargoAtual",CargoAtual.class);
 		arquivo.alias("Materia",Materia.class);
-	
 		arquivo.alias("Suplente",Suplente.class);
 		arquivo.alias("Relatoria",Relatoria.class);
 		arquivo.alias("Exercicio",Exercicio.class);
