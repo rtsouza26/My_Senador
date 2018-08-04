@@ -95,7 +95,7 @@ public class FerramentasController {
 	@Autowired
 	protected CategoriasRep categoriarep;
 	@Autowired
-	protected CategoriasPorParlamentarRep catparlrep;
+	protected CategoriasPorParlamentarRep categoriasParlamentarRep;
 	@Autowired
 	protected IdentificacaoComissaoRep idcomissaorep;
 	@Autowired
@@ -123,9 +123,26 @@ public class FerramentasController {
 	protected ComissaoParticipa comissaopart = new ComissaoParticipa();
 	protected Analyzer analisador = new Analyzer();
 	protected Categorias categorias = new Categorias();
-	protected CategoriasPorParlamentar catparl = new CategoriasPorParlamentar();
+	protected CategoriasPorParlamentar categoriaParlamentar = new CategoriasPorParlamentar();
 	protected int id = 0;
-
+	
+	//////contadores de categorias 
+	Map<String, Integer> categoriesMap = new HashMap<String, Integer>();
+	/*
+	protected short ambiental = 0;
+	protected short cultura = 0;
+	protected short educação = 0;
+	protected short eleições = 0;
+	protected short idoso = 0;
+	protected short imposto = 0;
+	protected short previdência = 0;
+	protected short saúde = 0;
+	protected short segurança = 0;
+	protected short trabalhista = 0;
+	protected short transito = 0;
+	*/
+	//////contadores de categorias
+	
 	@RequestMapping("ferramenta")
 	public ModelAndView ferramenta() {
 
@@ -331,28 +348,46 @@ public class FerramentasController {
 			System.out.printf("Processando pls do parlamentar: %s cod:%d \n", identificacao.get(i).getNomeParlamentar(),
 					identificacao.get(i).getCodigoParlamentar());
 			System.out.println("\n");
-
+		
 			Optional<MateriasAutoria> materiasop = materiasrep.findById(identificacao.get(i).getCodigoParlamentar());
 			if (materiasop.isPresent()) {
 				autoria.preenche(autoria, materiasop);
-				int pls = 0;
+				
 				for (int j = 0; j < categorias.size(); j++) {
-					// System.out.println(categorias.size());
+					
 					if (autoria.getMaterias() != null) {
+						categoriaParlamentar = new CategoriasPorParlamentar();
+						
+						categoriesMap.put("ambiental", 0);
+						categoriesMap.put("cultura", 0);
+						categoriesMap.put("educação", 0);
+						categoriesMap.put("eleições", 0);
+						categoriesMap.put("idoso", 0);
+						categoriesMap.put("imposto", 0);
+						categoriesMap.put("previdência", 0);
+						categoriesMap.put("saúde", 0);
+						categoriesMap.put("segurança", 0);
+						categoriesMap.put("trabalhista", 0);
+						categoriesMap.put("transito", 0);
+						
 						for (int n = 0; n < autoria.getMaterias().size(); n++) {
 
 							if (analisador.analisar(autoria.getMaterias().get(n).getEmentaMateria(),
 									categorias.get(j).getCategoria())) {
-								System.out.println("\n");
-								System.out.printf("Categoria %s encontrada na materia cod: %d \n",
-										categorias.get(j).getCategoria(), autoria.getMaterias().get(n).getId());
-								System.out.println("\n");
 								autoria.getMaterias().get(n).setCategoria(categorias.get(j).getCategoria());
 								materiaRep.save(autoria.getMaterias().get(n));
-								System.out.println(pls);
+								
+								//incrementa a categoria
+								categoriesMap.put(categorias.get(j).getCategoria(), categoriesMap.get(categorias.get(j).getCategoria()) + 1);
 							}
 						}
-
+						categoriaParlamentar.setCategoria(categorias.get(j));
+						categoriaParlamentar.setCodigoParlamentar(identificacao.get(i));
+						categoriaParlamentar.setNumero_pls(categoriesMap.get(categorias.get(j).getCategoria()));
+						
+						categoriasParlamentarRep.save(categoriaParlamentar);
+						
+						categoriaParlamentar = null;
 					}
 				}
 			}
@@ -376,7 +411,7 @@ public class FerramentasController {
 		Optional<MateriasAutoria> materiasop = materiasrep.findById(identificacao.get(3).getCodigoParlamentar());
 		if (materiasop.isPresent()) {
 			autoria.preenche(autoria, materiasop);
-			catparl.setCodigoParlamentar(identificacao.get(3).getCodigoParlamentar());
+			categoriaParlamentar.setCodigoParlamentar(identificacao.get(3));
 			for (int j = 0; j < categorias.size(); j++) {
 				for (int n = 0; n < autoria.getMaterias().size(); n++) {
 					
@@ -390,10 +425,10 @@ public class FerramentasController {
 				System.out.println(categorias.get(j).getCategoria());
 				System.out.println(categorias.get(j).getNumero_PLS());
 				//if(categorias.get(j).getNumero_PLS() != null) {
-					Categorias cat = new Categorias();
-					cat.setCategoria(categorias.get(j).getCategoria());
-					cat.setNumero_PLS(categorias.get(j).getNumero_PLS());
-					catparl.add(cat);
+//					Categorias cat = new Categorias();
+//					cat.setCategoria(categorias.get(j).getCategoria());
+//					cat.setNumero_PLS(categorias.get(j).getNumero_PLS());
+//					categoriaParlamentar.add(cat);
 				//}
 				
 				map.put(categorias.get(j).getCategoria(),PLS);
@@ -401,7 +436,7 @@ public class FerramentasController {
 				System.out.printf("Foram encontradas %d pls's da categoria: %s\n",PLS,
 						categorias.get(j));
 				System.out.println("\n");
-				catparlrep.save(catparl);
+				categoriasParlamentarRep.save(categoriaParlamentar);
 				Thread.sleep(1000);
 				PLS =0;
 			}
@@ -430,7 +465,6 @@ public class FerramentasController {
 			Optional<MateriasAutoria> materiasop = materiasrep.findById(identificacao.get(i).getCodigoParlamentar());
 			if (materiasop.isPresent()) {
 				autoria.preenche(autoria, materiasop);
-				int pls = 0;
 				for (int j = 0; j < categorias.size(); j++) {
 					System.out.println(categorias.get(j).getCategoria());
 					if (autoria.getMaterias() != null) {
@@ -445,6 +479,10 @@ public class FerramentasController {
 								System.out.println("\n");
 								autoria.getMaterias().get(n).setCategoria(categorias.get(j).getCategoria());
 								materiaRep.save(autoria.getMaterias().get(n));
+								
+								categoriaParlamentar.setCodigoParlamentar(identificacao.get(i));
+								categoriaParlamentar.setCategoria(categorias.get(j));
+								
 
 							}
 						}

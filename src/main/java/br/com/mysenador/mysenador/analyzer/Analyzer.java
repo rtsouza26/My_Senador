@@ -14,8 +14,6 @@ public class Analyzer {
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {
-				System.out.println("mach encontrado na posição: " + procura.start()
-						+ conteudo.substring(procura.start(), procura.end()));
 				teste = true;
 			}
 		} else if (parametro.equals("previdência")) {
@@ -23,8 +21,6 @@ public class Analyzer {
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {
-				System.out.println("mach encontrado na posição: " + procura.start()
-						+ conteudo.substring(procura.start(), procura.end()));
 				teste = true;
 			}
 		} else if (parametro.equals("trabalhista")) {
@@ -32,8 +28,6 @@ public class Analyzer {
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {
-				System.out.println("mach encontrado na posição: " + procura.start()
-						+ conteudo.substring(procura.start(), procura.end()));
 				teste = true;
 			}
 		} else if (parametro.equals("educação")) {
@@ -41,8 +35,6 @@ public class Analyzer {
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {
-				System.out.println("mach encontrado na posição: " + procura.start()
-						+ conteudo.substring(procura.start(), procura.end()));
 				teste = true;
 			}
 		} else if (parametro.equals("cultura")) {
@@ -50,8 +42,6 @@ public class Analyzer {
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {
-				System.out.println("mach encontrado na posição: " + procura.start()
-						+ conteudo.substring(procura.start(), procura.end()));
 				teste = true;
 			}
 		
@@ -60,8 +50,6 @@ public class Analyzer {
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {
-				System.out.println("mach encontrado na posição: " + procura.start()
-						+ conteudo.substring(procura.start(), procura.end()));
 				teste = true;
 			}
 		} else if (parametro.equals("ambiental")) {
@@ -69,8 +57,6 @@ public class Analyzer {
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {
-				System.out.println("mach encontrado na posição: " + procura.start()
-						+ conteudo.substring(procura.start(), procura.end()));
 				teste = true;
 			}
 		} else if (parametro.equals("mobilidade")) {
@@ -78,26 +64,23 @@ public class Analyzer {
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {
-				System.out.println("mach encontrado na posição: " + procura.start()
-						+ conteudo.substring(procura.start(), procura.end()));
 				teste = true;
 			}
 		} else if (parametro.equals("eleições")) {
-			String regex = "(eleições)|(campanha)(\\s)(eleitoral)|(campanhas)(\\s)(eleitorais)|(candidatos)";
+			String regex = "(eleições)|(campanha)(\\s)(eleitoral)|(campanhas)(\\s)(eleitorais)|(candidatos)|(partidárias)|(partidos)";
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {
-				System.out.println("mach encontrado na posição: " + procura.start()
-						+ conteudo.substring(procura.start(), procura.end()));
 				teste = true;
 			}
 		} else if (parametro.equals("economia")) {
-			String regex = "(economia)|(empresas)(\\s)(públicas)|(sociedade)(\\s)(empresária)|(instituições)(\\s)(monetárias)|(abertura)(\\s)(e)(\\s)(fechamento)(\\s)(de)(\\s)(empresas)|(empreendedorismo)|(imposto)|(impostos)|(Imposto)(\\\\s)(de)(\\\\s)(Renda)|(IOF)|(tributário)|(fiscal)|(tributos)(\\\\s)(federais)|(tarifas)|(tributos)|(reforma)(\\s)(agrária)";
+			String regex = "(economia)|(empresas)(\\s)(públicas)|(sociedade)(\\s)(empresária)|"
+					+ "(instituições)(\\s)(monetárias)|(abertura)(\\s)(e)(\\s)(fechamento)(\\s)(de)(\\s)(empresas)|"
+					+ "(empreendedorismo)|(imposto)|(impostos)|(Imposto)(\\\\s)(de)(\\\\s)(Renda)|(IOF)|(tributário)|"
+					+ "(fiscal)|(tributos)(\\\\s)(federais)|(tarifas)|(tributos)|(reforma)(\\s)(agrária)|(produção)|(royalts)";
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {
-				System.out.println("mach encontrado na posição: " + procura.start()
-						+ conteudo.substring(procura.start(), procura.end()));
 				teste = true;
 			}
 		} else if (parametro.equals("cidadania")) {
@@ -105,8 +88,6 @@ public class Analyzer {
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {
-				System.out.println("mach encontrado na posição: " + procura.start()
-						+ conteudo.substring(procura.start(), procura.end()));
 				teste = true;
 			}
 			
@@ -115,8 +96,6 @@ public class Analyzer {
 			Pattern expres = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 			Matcher procura = expres.matcher(conteudo);
 			while (procura.find()) {
-				System.out.println("mach encontrado na posição: " + procura.start()
-						+ conteudo.substring(procura.start(), procura.end()));
 				teste = true;
 			}
 			

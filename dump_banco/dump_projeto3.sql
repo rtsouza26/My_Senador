@@ -43,6 +43,62 @@ LOCK TABLES `bloco` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `identificacaocomissao`
+--
+
+DROP TABLE IF EXISTS `identificacaocomissao`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `identificacaocomissao` (
+  `codigo_comissao` varchar(255) NOT NULL,
+  `nome_casa_comissao` varchar(255) DEFAULT NULL,
+  `nome_comissao` varchar(255) DEFAULT NULL,
+  `sigla_casa_comissao` varchar(255) DEFAULT NULL,
+  `sigla_comissao` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`codigo_comissao`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `identificacaocomissao`
+--
+
+LOCK TABLES `identificacaocomissao` WRITE;
+/*!40000 ALTER TABLE `identificacaocomissao` DISABLE KEYS */;
+INSERT INTO `identificacaocomissao` VALUES ('1306','Senado Federal','Comissão de Desenvolvimento Regional e Turismo','SF','CDR'),('1916','Congresso Nacional','Representação Brasileira no Parlamento do Mercosul','CN','RBPM'),('2042','Congresso Nacional','Grupo Parlamentar Brasil - Azerbaijão','CN','GPAZERBAIJÃO'),('2044','Congresso Nacional','Grupo Parlamentar Brasil - China','CN','GPCHINA'),('2049','Congresso Nacional','Grupo Parlamentar Brasil - Irlanda','CN','GPIRLANDA'),('2091','Congresso Nacional','Comissão Mista de Consolidação da Legislação Federal','CN','CMCF'),('34','Senado Federal','Comissão de Constituição, Justiça e Cidadania','SF','CCJ'),('40','Senado Federal','Comissão de Assuntos Sociais','SF','CAS'),('445','Senado Federal','Conselho de Ética e Decoro Parlamentar','SF','CEDP'),('47','Senado Federal','Comissão de Educação, Cultura e Esporte','SF','CE'),('54','Senado Federal','Comissão de Relações Exteriores e Defesa Nacional','SF','CRE'),('59','Senado Federal','Comissão de Serviços de Infraestrutura','SF','CI'),('768','Congresso Nacional','Conselho da Ordem do Congresso Nacional','CN','COCN');
+/*!40000 ALTER TABLE `identificacaocomissao` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `comissao`
+--
+
+DROP TABLE IF EXISTS `comissao`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `comissao` (
+  `id` int(11) NOT NULL,
+  `data_fim` varchar(255) DEFAULT NULL,
+  `data_inicio` varchar(255) DEFAULT NULL,
+  `descricao_participacao` varchar(255) DEFAULT NULL,
+  `identificacao_comissao_codigo_comissao` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKekaq5dfampqtomhx8spkmbe04` (`identificacao_comissao_codigo_comissao`),
+  CONSTRAINT `FKekaq5dfampqtomhx8spkmbe04` FOREIGN KEY (`identificacao_comissao_codigo_comissao`) REFERENCES `identificacaocomissao` (`codigo_comissao`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comissao`
+--
+
+LOCK TABLES `comissao` WRITE;
+/*!40000 ALTER TABLE `comissao` DISABLE KEYS */;
+INSERT INTO `comissao` VALUES (34,NULL,'2018-04-25','Titular','34'),(40,NULL,'2017-03-09','Suplente','40'),(47,NULL,'2017-10-05','Titular','47'),(54,NULL,'2017-03-09','Titular','54'),(59,NULL,'2017-09-27','Suplente','59'),(445,NULL,'2017-09-27','Titular','445'),(768,NULL,'2017-02-02','Titular','768'),(1306,NULL,'2018-06-19','Suplente','1306'),(1916,NULL,'2015-04-08','Titular','1916'),(2042,NULL,'2014-08-06','Titular','2042'),(2044,NULL,'2015-03-31','Titular','2044'),(2049,NULL,'2015-03-31','Titular','2049'),(2091,NULL,'2017-03-15','Suplente','2091');
+/*!40000 ALTER TABLE `comissao` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `cargoatual`
 --
 
@@ -105,7 +161,9 @@ CREATE TABLE `categorias_por_parlamentar` (
   `categoria` varchar(255) DEFAULT NULL,
   `codigo_parlamentar` int(11) DEFAULT NULL,
   `numero_pls` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  CONSTRAINT categoria FOREIGN KEY (categoria) REFERENCES categorias(categoria),
+  CONSTRAINT codigo_parlamentar FOREIGN KEY (codigo_parlamentar) REFERENCES identificacao_parlamentar(codigo_parlamentar)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -116,35 +174,6 @@ CREATE TABLE `categorias_por_parlamentar` (
 LOCK TABLES `categorias_por_parlamentar` WRITE;
 /*!40000 ALTER TABLE `categorias_por_parlamentar` DISABLE KEYS */;
 /*!40000 ALTER TABLE `categorias_por_parlamentar` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `comissao`
---
-
-DROP TABLE IF EXISTS `comissao`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `comissao` (
-  `id` int(11) NOT NULL,
-  `data_fim` varchar(255) DEFAULT NULL,
-  `data_inicio` varchar(255) DEFAULT NULL,
-  `descricao_participacao` varchar(255) DEFAULT NULL,
-  `identificacao_comissao_codigo_comissao` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKekaq5dfampqtomhx8spkmbe04` (`identificacao_comissao_codigo_comissao`),
-  CONSTRAINT `FKekaq5dfampqtomhx8spkmbe04` FOREIGN KEY (`identificacao_comissao_codigo_comissao`) REFERENCES `identificacaocomissao` (`codigo_comissao`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `comissao`
---
-
-LOCK TABLES `comissao` WRITE;
-/*!40000 ALTER TABLE `comissao` DISABLE KEYS */;
-INSERT INTO `comissao` VALUES (34,NULL,'2018-04-25','Titular','34'),(40,NULL,'2017-03-09','Suplente','40'),(47,NULL,'2017-10-05','Titular','47'),(54,NULL,'2017-03-09','Titular','54'),(59,NULL,'2017-09-27','Suplente','59'),(445,NULL,'2017-09-27','Titular','445'),(768,NULL,'2017-02-02','Titular','768'),(1306,NULL,'2018-06-19','Suplente','1306'),(1916,NULL,'2015-04-08','Titular','1916'),(2042,NULL,'2014-08-06','Titular','2042'),(2044,NULL,'2015-03-31','Titular','2044'),(2049,NULL,'2015-03-31','Titular','2049'),(2091,NULL,'2017-03-15','Suplente','2091');
-/*!40000 ALTER TABLE `comissao` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -187,33 +216,6 @@ CREATE TABLE `comissaoparticipa_comissoes` (
   CONSTRAINT `FKtpihur1qvcjk0g5ck65asfgsu` FOREIGN KEY (`comissao_participa_id`) REFERENCES `comissaoparticipa` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `identificacaocomissao`
---
-
-DROP TABLE IF EXISTS `identificacaocomissao`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `identificacaocomissao` (
-  `codigo_comissao` varchar(255) NOT NULL,
-  `nome_casa_comissao` varchar(255) DEFAULT NULL,
-  `nome_comissao` varchar(255) DEFAULT NULL,
-  `sigla_casa_comissao` varchar(255) DEFAULT NULL,
-  `sigla_comissao` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`codigo_comissao`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `identificacaocomissao`
---
-
-LOCK TABLES `identificacaocomissao` WRITE;
-/*!40000 ALTER TABLE `identificacaocomissao` DISABLE KEYS */;
-INSERT INTO `identificacaocomissao` VALUES ('1306','Senado Federal','Comissão de Desenvolvimento Regional e Turismo','SF','CDR'),('1916','Congresso Nacional','Representação Brasileira no Parlamento do Mercosul','CN','RBPM'),('2042','Congresso Nacional','Grupo Parlamentar Brasil - Azerbaijão','CN','GPAZERBAIJÃO'),('2044','Congresso Nacional','Grupo Parlamentar Brasil - China','CN','GPCHINA'),('2049','Congresso Nacional','Grupo Parlamentar Brasil - Irlanda','CN','GPIRLANDA'),('2091','Congresso Nacional','Comissão Mista de Consolidação da Legislação Federal','CN','CMCF'),('34','Senado Federal','Comissão de Constituição, Justiça e Cidadania','SF','CCJ'),('40','Senado Federal','Comissão de Assuntos Sociais','SF','CAS'),('445','Senado Federal','Conselho de Ética e Decoro Parlamentar','SF','CEDP'),('47','Senado Federal','Comissão de Educação, Cultura e Esporte','SF','CE'),('54','Senado Federal','Comissão de Relações Exteriores e Defesa Nacional','SF','CRE'),('59','Senado Federal','Comissão de Serviços de Infraestrutura','SF','CI'),('768','Congresso Nacional','Conselho da Ordem do Congresso Nacional','CN','COCN');
-/*!40000 ALTER TABLE `identificacaocomissao` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Dumping data for table `comissaoparticipa_comissoes`
