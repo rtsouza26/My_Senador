@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +24,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.mysenador.mysenador.model.Categorias;
+import br.com.mysenador.mysenador.model.CategoriasPorParlamentar;
 import br.com.mysenador.mysenador.repository.CategoriasRep;
 
 
@@ -31,6 +36,9 @@ public class CategoriasController {
 	protected CategoriasRep categoriarep;
 	protected Categorias categorias = new Categorias();
 	List<Categorias> cat = new ArrayList<Categorias>();
+	
+	@PersistenceUnit
+	private EntityManagerFactory emf;
 	
 	@CrossOrigin(origins = {"*"})
 	@RequestMapping("categoria")
@@ -63,12 +71,21 @@ public class CategoriasController {
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		Map<String,Object> map = new HashMap<>();
 		
+		EntityManager em = emf.createEntityManager();;
+		List<CategoriasPorParlamentar> categoriasParlamentare = new ArrayList<>();
+		
 		cat = mapper.readValue(categories, new TypeReference<List<Categorias>>(){});
 		for(int i =0;i<cat.size();i++) {
-			System.out.println(cat.get(i).getCategoria());
+			List<CategoriasPorParlamentar> l = em.createQuery("SELECT DISTINCT catParl FROM CategoriasPorParlamentar catParl "
+					+ "where categoria = '" + cat.get(i).getCategoria() 
+					+ "' order by numero_pls DESC", CategoriasPorParlamentar.class).setMaxResults(3).getResultList();
+
+			categoriasParlamentare.addAll(l);
 		}
 		
+		map.put("senadores", categoriasParlamentare);
 		return mapper.writeValueAsString(map);
 
 	}
+	
 }

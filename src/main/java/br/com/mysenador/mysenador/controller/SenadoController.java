@@ -1,5 +1,6 @@
 package br.com.mysenador.mysenador.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,8 +10,10 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -120,11 +123,11 @@ int y =0;
 			//map.put("senators", identificacao);
 			map.put("senators", senado);
 			return mapper.writeValueAsString(map);
-				} catch (JsonProcessingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						return null;
-					}
+		} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+		}
 		
 		//map.put("senators", identificacao);
 		//model.addAttribute("descon", ident);
@@ -133,6 +136,21 @@ int y =0;
 
 		//return mapper.writeValueAsString(map);
 
+	}
+	
+	@CrossOrigin(origins = {"*"})
+	@RequestMapping(value = "api/senator/id", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String getSenatorById(@RequestBody String id) throws IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String,Object> map = new HashMap<>();
+		identificacao = null;
+		System.out.println(id);
+		
+		map.put("senator", idsalva.findById(Integer.parseInt(id)));
+		
+		return mapper.writeValueAsString(map);
+	
 	}
 	
 	/*
