@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -55,7 +57,9 @@ public class SenadoController {
 	@Autowired
 	UserRep userrep;
 	EntityManager entidid;
-
+	@PersistenceUnit
+	private EntityManagerFactory emf;
+	
 	IdentificacaoParlamentar id;
 	
 	//@RequestMapping("/")
@@ -145,9 +149,12 @@ int y =0;
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String,Object> map = new HashMap<>();
 		identificacao = null;
-		System.out.println(id);
 		
-		map.put("senator", idsalva.findById(Integer.parseInt(id)));
+		EntityManager em = emf.createEntityManager();;
+		
+		List<IdentificacaoParlamentar> l = em.createQuery("SELECT DISTINCT senator FROM IdentificacaoParlamentar senator "
+				+ "WHERE CodigoParlamentar = '" + id + "'" , IdentificacaoParlamentar.class).setMaxResults(1).getResultList();
+		map.put("senator", l.get(0));
 		
 		return mapper.writeValueAsString(map);
 	
