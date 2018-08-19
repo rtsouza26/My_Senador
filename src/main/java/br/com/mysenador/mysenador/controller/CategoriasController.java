@@ -72,18 +72,23 @@ public class CategoriasController {
 		Map<String,Object> map = new HashMap<>();
 		
 		EntityManager em = emf.createEntityManager();;
-		List<CategoriasPorParlamentar> categoriasParlamentare = new ArrayList<>();
+		List<CategoriasPorParlamentar> categoriasParlamentar = new ArrayList<>();
 		
 		cat = mapper.readValue(categories, new TypeReference<List<Categorias>>(){});
-		for(int i =0;i<cat.size();i++) {
+		for(int i = cat.size()-1; i >= 0; i++) {
 			List<CategoriasPorParlamentar> l = em.createQuery("SELECT DISTINCT catParl FROM CategoriasPorParlamentar catParl "
 					+ "where categoria = '" + cat.get(i).getCategoria() 
-					+ "' order by numero_pls DESC", CategoriasPorParlamentar.class).setMaxResults(3).getResultList();
+					+ "' order by numero_pls DESC", CategoriasPorParlamentar.class).setMaxResults(5).getResultList();
 
-			categoriasParlamentare.addAll(l);
+			//colocar os pesos de cada candidato, por suas pls
+			for (CategoriasPorParlamentar category : l) {
+				category.setNumero_pls(i * category.getNumero_pls());
+			}
+			
+			categoriasParlamentar.addAll(l);
 		}
-		
-		map.put("senadores", categoriasParlamentare);
+
+		map.put("senadores", categoriasParlamentar);
 		return mapper.writeValueAsString(map);
 
 	}

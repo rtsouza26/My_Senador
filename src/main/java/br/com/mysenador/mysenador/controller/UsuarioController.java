@@ -70,7 +70,7 @@ public class UsuarioController {
 	
 	@CrossOrigin(origins = {"*"})
 	@RequestMapping(value = "/api/user/sign", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String calcularCategorias(@RequestBody String login) throws JsonProcessingException {
+	public String login(@RequestBody String login) throws JsonProcessingException {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
