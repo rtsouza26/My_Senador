@@ -143,13 +143,13 @@ public class FerramentasController {
 	*/
 	//////contadores de categorias
 	
-	@RequestMapping("ferramenta")
-	public ModelAndView ferramenta() {
-
-		ModelAndView model = new ModelAndView("charts");
-
-		return model;
-	}
+//	@RequestMapping("ferramenta")
+//	public ModelAndView ferramenta() {
+//
+//		ModelAndView model = new ModelAndView("charts");
+//
+//		return model;
+//	}
 
 	// função que salva todos os objetos IdentificacaoParlamentar no banco de dados
 	@RequestMapping(value = "salva", method = RequestMethod.POST)
