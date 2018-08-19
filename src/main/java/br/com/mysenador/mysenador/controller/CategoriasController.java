@@ -40,6 +40,8 @@ public class CategoriasController {
 	@PersistenceUnit
 	private EntityManagerFactory emf;
 	
+	private final short VALUE_PL = 3;
+	
 	@CrossOrigin(origins = {"*"})
 	@RequestMapping("categoria")
 	public String categorias(@RequestParam String categoria) {
@@ -75,14 +77,14 @@ public class CategoriasController {
 		List<CategoriasPorParlamentar> categoriasParlamentar = new ArrayList<>();
 		
 		cat = mapper.readValue(categories, new TypeReference<List<Categorias>>(){});
-		for(int i = cat.size()-1; i >= 0; i++) {
+		for(int i = (cat.size()-1) ; i >= 0; i--) {
 			List<CategoriasPorParlamentar> l = em.createQuery("SELECT DISTINCT catParl FROM CategoriasPorParlamentar catParl "
 					+ "where categoria = '" + cat.get(i).getCategoria() 
 					+ "' order by numero_pls DESC", CategoriasPorParlamentar.class).setMaxResults(5).getResultList();
 
 			//colocar os pesos de cada candidato, por suas pls
 			for (CategoriasPorParlamentar category : l) {
-				category.setNumero_pls(i * category.getNumero_pls());
+				category.setNumero_pls((i * VALUE_PL) * category.getNumero_pls());
 			}
 			
 			categoriasParlamentar.addAll(l);
