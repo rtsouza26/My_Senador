@@ -1,7 +1,5 @@
 package br.com.mysenador.mysenador.repository;
 
-import javax.transaction.Transactional;
-
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 

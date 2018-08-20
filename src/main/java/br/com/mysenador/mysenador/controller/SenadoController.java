@@ -33,6 +33,7 @@ import br.com.mysenador.mysenador.model.Senado;
 import br.com.mysenador.mysenador.model.Titular;
 import br.com.mysenador.mysenador.model.User;
 import br.com.mysenador.mysenador.repository.IdentificacaoParlamentarRep;
+import br.com.mysenador.mysenador.repository.MateriasAutoriaRep;
 import br.com.mysenador.mysenador.repository.TitularRep;
 import br.com.mysenador.mysenador.repository.UserRep;
 import br.com.mysenador.mysenador.util.HtmlRequest;
@@ -61,6 +62,9 @@ public class SenadoController {
 	private EntityManagerFactory emf;
 	
 	IdentificacaoParlamentar id;
+	
+	@Autowired
+	MateriasAutoriaRep materiasAutoriaRep;
 	
 	//@RequestMapping("/")
 	//public String index() {
@@ -150,13 +154,20 @@ int y =0;
 		Map<String,Object> map = new HashMap<>();
 		identificacao = null;
 		
-		EntityManager em = emf.createEntityManager();;
-		
-		List<IdentificacaoParlamentar> l = em.createQuery("SELECT DISTINCT senator FROM IdentificacaoParlamentar senator "
-				+ "WHERE CodigoParlamentar = '" + id + "'" , IdentificacaoParlamentar.class).setMaxResults(1).getResultList();
-		map.put("senator", l.get(0));
-		
-		return mapper.writeValueAsString(map);
+		try {
+			EntityManager em = emf.createEntityManager();;
+			
+			List<IdentificacaoParlamentar> l = em.createQuery("SELECT DISTINCT senator FROM IdentificacaoParlamentar senator "
+					+ "WHERE CodigoParlamentar = '" + id + "'" , IdentificacaoParlamentar.class).setMaxResults(1).getResultList();
+			
+			map.put("senator", l.get(0));
+			map.put("projetosLei", materiasAutoriaRep.findById(l.get(0).getCodigoParlamentar()).get());
+			
+			return mapper.writeValueAsString(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
 	
 	}
 	

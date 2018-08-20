@@ -20,8 +20,6 @@ public class MateriasAutoria {
 	@Column
 	protected Integer Numero_PLS;
 	
-	
-	
 	public Integer getNumero_PLS() {
 		return Numero_PLS;
 	}

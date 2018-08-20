@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.mysenador.mysenador.extractor.XmlApi;
@@ -40,12 +39,8 @@ import br.com.mysenador.mysenador.repository.SegundaLegislaturaRep;
 import br.com.mysenador.mysenador.repository.SuplenteRep;
 import br.com.mysenador.mysenador.util.HtmlRequest;
 
-
-
-
 @RestController
 public class ParlamentarController {
-	
 	
 	@Autowired
 	protected IdentificacaoParlamentarRep idsalva;
@@ -98,8 +93,6 @@ public class ParlamentarController {
 		info2 = info2.preenche(info2, info);
 		materias.preenche(materias, materiasop);
 		String foto = "senadores/" + info.get().getCodigoParlamentar() + ".png";
-		
-		
 			
 		model.addObject("info", info2);
 		model.addObject("foto", foto);
@@ -109,7 +102,6 @@ public class ParlamentarController {
 		model.addObject("materias", materias);
 		
 		return model;
-
 	}
 	
 	@CrossOrigin(origins = {"http://localhost:8100","http://localhost:8080"})
@@ -125,11 +117,5 @@ public class ParlamentarController {
 		map.put("senator", info2);
 		return mapper.writeValueAsString(map);
 	}
-	
-	
-	
-
-		
-		
 
 }

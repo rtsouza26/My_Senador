@@ -5,8 +5,6 @@ import java.util.regex.Pattern;
 
 public class Analyzer {
 
-	
-
 	public boolean analisar(String conteudo, String parametro) {
 		boolean teste = false;
 		if (parametro.equals("saúde")) {

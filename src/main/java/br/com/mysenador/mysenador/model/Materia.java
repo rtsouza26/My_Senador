@@ -3,14 +3,9 @@ package br.com.mysenador.mysenador.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name= "materia")
@@ -23,8 +18,6 @@ public class Materia {
 	protected String EmentaMateria;
 	@Column
 	protected String Categoria;
-	
-	
 	
 	public Integer getId() {
 		return id;
@@ -51,9 +44,4 @@ public class Materia {
 		Categoria = categoria;
 	}
 	
-	
-	
-	
-	
-
 }

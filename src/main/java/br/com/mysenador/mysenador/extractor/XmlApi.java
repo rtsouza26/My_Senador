@@ -18,7 +18,6 @@ import br.com.mysenador.mysenador.model.IdentificacaoParlamentar;
 import br.com.mysenador.mysenador.model.Lideranca;
 import br.com.mysenador.mysenador.model.Mandato;
 import br.com.mysenador.mysenador.model.Materia;
-import br.com.mysenador.mysenador.model.MateriasAutoria;
 import br.com.mysenador.mysenador.model.Parlamentar;
 import br.com.mysenador.mysenador.model.ParlamentarDetalhado;
 import br.com.mysenador.mysenador.model.Partido;
@@ -33,7 +32,6 @@ import br.com.mysenador.mysenador.model.Titular;
 public class XmlApi {
 	
 	public Senado converte(String xml) {
-		
 		
 			XStream arquivo = new XStream();
 			XStream.setupDefaultSecurity(arquivo);
@@ -85,7 +83,6 @@ public class XmlApi {
 
 	public String desconverte(Senado senado){
 	
-	
 		XStream arquivo = new XStream();
 		XStream.setupDefaultSecurity(arquivo);
 		arquivo.autodetectAnnotations(true);
@@ -113,7 +110,5 @@ public class XmlApi {
 		 arquivo.autodetectAnnotations(true);
 		 return arquivo.toXML(ident);
 	}
-	
-	
 
 }
